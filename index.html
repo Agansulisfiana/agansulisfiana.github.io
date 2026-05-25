@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <title>Agan Sulisfiana | IT Support Portfolio</title>
+
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Inter, Arial, Helvetica, sans-serif;
+      font-family: 'Manrope', sans-serif;
     }
 
     html {
@@ -17,8 +19,8 @@
     }
 
     body {
-      background: #f3f6fb;
-      color: #1f2937;
+      background: transparent;
+      color: #0b0b0b;
       line-height: 1.7;
     }
 
@@ -33,10 +35,31 @@
       margin: auto;
     }
 
+    #tech-bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: #020617;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+      background-size: 42px 42px;
+      pointer-events: none;
+    }
+
     .navbar {
       position: sticky;
       top: 0;
-      z-index: 99;
+      z-index: 999;
       background: rgba(15, 23, 42, 0.96);
       backdrop-filter: blur(10px);
       box-shadow: 0 8px 30px rgba(15, 23, 42, 0.2);
@@ -78,7 +101,7 @@
       min-height: 88vh;
       display: flex;
       align-items: center;
-      background: radial-gradient(circle at top right, #2563eb 0%, transparent 28%), linear-gradient(135deg, #0f172a, #111827 55%, #1e3a8a);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(17, 24, 39, 0.88) 55%, rgba(30, 58, 138, 0.86));
       color: white;
       padding: 80px 0;
     }
@@ -205,7 +228,7 @@
     }
 
     .section-heading span {
-      color: #2563eb;
+      color: #38bdf8;
       font-size: 13px;
       font-weight: 800;
       text-transform: uppercase;
@@ -214,7 +237,7 @@
 
     .section-heading h2 {
       font-size: clamp(28px, 4vw, 42px);
-      color: #0f172a;
+      color: #f8f9fa;
       margin-top: 6px;
     }
 
@@ -234,23 +257,30 @@
     }
 
     .stat {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 18px;
-      padding: 20px;
-      text-align: center;
-    }
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px 18px;
+  text-align: center;
+  transition: .3s ease;
+}
 
-    .stat h3 {
-      color: #2563eb;
-      font-size: 26px;
-    }
+.stat:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 35px rgba(15, 23, 42, .08);
+}
 
-    .stat p {
-      color: #64748b;
-      font-size: 13px;
-      font-weight: 700;
-    }
+.stat h3 {
+  color: #2563eb;
+  font-size: 30px;
+  margin-bottom: 6px;
+}
+
+.stat p {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 700;
+}
 
     .skills-grid {
       display: grid;
@@ -267,6 +297,8 @@
       padding: 24px;
       box-shadow: 0 16px 35px rgba(15, 23, 42, 0.07);
       border: 1px solid #e5e7eb;
+      position: relative;
+      overflow: visible;
       transition: 0.3s;
     }
 
@@ -361,10 +393,46 @@
     }
 
     .projects-grid,
+    .activity-grid,
     .education-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
+      overflow: visible;
+      position: relative;
+    }
+
+    .portfolio-group + .portfolio-group {
+      margin-top: 42px;
+    }
+
+    .portfolio-title {
+      color: #f8f9fa;
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+
+    .section-subtitle {
+      max-width: 680px;
+      margin: 10px auto 0;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+
+    .activity-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .project-card {
+      z-index: 1;
+    }
+
+    .project-card:hover {
+      z-index: 1000;
+    }
+
+    .project-card:has(.project-hover:hover) {
+      z-index: 99999;
     }
 
     .project-card h3,
@@ -377,6 +445,134 @@
     .education-card p {
       color: #64748b;
       font-size: 14px;
+    }
+
+    .project-icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #e0f2fe, #eff6ff);
+      color: #0369a1;
+      margin-bottom: 14px;
+      box-shadow: inset 0 0 0 1px rgba(14, 165, 233, 0.16);
+    }
+
+    .project-icon svg,
+    .activity-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .project-tag {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .activity-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .activity-thumb {
+      position: relative;
+    }
+
+    .activity-card img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      background: #e5e7eb;
+    }
+
+    .activity-icon {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(248, 250, 252, 0.94);
+      color: #0369a1;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .activity-card h3 {
+      color: #0f172a;
+      font-size: 15px;
+      padding: 16px;
+      margin: 0;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* .project-hover {
+      display: inline-block;
+      position: relative;
+      margin-top: 14px;
+      color: #38bdf8;
+      font-weight: 800;
+      cursor: pointer;
+      border-bottom: 1px dashed rgba(56, 189, 248, .6);
+    } */
+
+    .project-preview {
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 18px);
+      width: 420px;
+      max-width: 80vw;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-50%) translateY(12px) scale(.96);
+      transition: .3s ease;
+      z-index: 999999;
+      pointer-events: none;
+    }
+
+    .project-preview img {
+      width: 100%;
+      display: block;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow:
+        0 25px 50px rgba(0,0,0,.38),
+        0 0 25px rgba(56,189,248,.28);
+    }
+
+    .project-caption {
+      margin-top: 10px;
+      background: rgba(15, 23, 42, .96);
+      color: white;
+      padding: 12px 15px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+      box-shadow: 0 16px 35px rgba(15,23,42,.25);
+    }
+
+    .project-hover:hover .project-preview {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0) scale(1);
     }
 
     .contact-section {
@@ -419,13 +615,23 @@
 
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: 0.7s ease;
     }
 
     .reveal.show {
       opacity: 1;
-      transform: translateY(0);
+      animation: fadeUp .7s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
 
     .back-to-top {
@@ -443,6 +649,7 @@
       cursor: pointer;
       display: none;
       box-shadow: 0 16px 35px rgba(56, 189, 248, 0.4);
+      z-index: 9999;
     }
 
     .back-to-top.show {
@@ -461,12 +668,25 @@
       }
 
       .projects-grid,
+      .activity-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .education-grid {
         grid-template-columns: 1fr;
       }
 
       .nav-menu {
         display: none;
+      }
+
+      .project-preview {
+        left: 0;
+        transform: translateY(12px) scale(.96);
+      }
+
+      .project-hover:hover .project-preview {
+        transform: translateY(0) scale(1);
       }
     }
 
@@ -476,6 +696,9 @@
       }
 
       .skills-grid,
+      .projects-grid,
+      .activity-grid,
+      .education-grid,
       .stats-grid {
         grid-template-columns: 1fr;
       }
@@ -484,20 +707,26 @@
         width: 150px;
         height: 150px;
       }
+
+      .project-preview {
+        width: 300px;
+      }
     }
   </style>
 </head>
+
 <body>
+  <canvas id="tech-bg"></canvas>
   <nav class="navbar">
     <div class="container nav-content">
       <div class="logo">AGAN SULISFIANA</div>
       <ul class="nav-menu">
-        <li><a href="#about">Tentang</a></li>
-        <li><a href="#skills">Skill</a></li>
-        <li><a href="#experience">Pengalaman</a></li>
-        <li><a href="#projects">Project</a></li>
-        <li><a href="#education">Pendidikan</a></li>
-        <li><a href="#contact">Kontak</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
   </nav>
@@ -509,23 +738,23 @@
         <h1>Agan Sulisfiana</h1>
         <h2 id="typing-title">IT Support</h2>
         <p>
-          IT Support professional dengan pengalaman troubleshooting komputer, hardware, software,
-          jaringan, printer, device deployment, preventive maintenance, serta support user onsite maupun remote.
+          IT Support professional with hands-on experience in computer, hardware, software,
+          network, and printer troubleshooting, device deployment, preventive maintenance,
+          and on-site or remote user support.
         </p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="#contact">Hubungi Saya</a>
+          <a class="btn btn-primary" href="#contact">Contact Me</a>
           <a class="btn btn-outline" href="./Resume-Agan-Sulisfiana.pdf" target="_blank">Download Resume</a>
         </div>
       </div>
 
       <div class="profile-card reveal">
-        <img src="./foto-agan.png" alt="Foto Agan Sulisfiana" class="profile-photo" />
+        <img src="./foto-agan.png" alt="Photo of Agan Sulisfiana" class="profile-photo" />
         <h3>IT Support</h3>
         <p>Helpdesk • Networking • Printer Support</p>
         <div class="contact-mini">
-          <span>📞 0822 9990 0282</span>
           <span>✉️ agansulisfiana@gmail.com</span>
-          <span>📍 Jakarta Selatan, DKI Jakarta</span>
+          <span>📍 South Jakarta, DKI Jakarta</span>
           <span>🔗 linkedin.com/in/agan-it-support</span>
         </div>
       </div>
@@ -536,20 +765,35 @@
     <div class="container">
       <div class="section-heading reveal">
         <span>Profile</span>
-        <h2>Tentang Saya</h2>
+        <h2>About Me</h2>
       </div>
       <div class="about-card reveal">
         <p>
-          Saya memiliki pengalaman sebagai IT Support sejak 2019 di PT Reycom Integrated Solusi.
-          Fokus utama saya adalah membantu operasional IT agar tetap stabil melalui troubleshooting,
-          instalasi sistem operasi, maintenance perangkat, dukungan teknis kepada user, dan penanganan
-          perangkat khusus seperti Fargo Card Printer, ADM, Digital Signage, e-KTP Reader, dan Digital BCA Machine Project.
+          IT Support professional with 5+ years of experience in hardware, software,
+          network troubleshooting, printer support, device deployment, and field technical operations.
+          Experienced in supporting Fargo Card Printer, ADM Dukcapil, Digital Signage,
+          e-KTP Reader, and BCA CS Digital systems.
         </p>
         <div class="stats-grid">
-          <div class="stat"><h3>5+</h3><p>Tahun Pengalaman IT</p></div>
-          <div class="stat"><h3>Onsite</h3><p>User Support</p></div>
-          <div class="stat"><h3>Remote</h3><p>Technical Assistance</p></div>
-          <div class="stat"><h3>Multi</h3><p>Device Support</p></div>
+          <div class="stat">
+            <h3>5+</h3>
+            <p>Years in IT Support</p>
+          </div>
+        
+          <div class="stat">
+            <h3>Field</h3>
+            <p>On-site Technical Support</p>
+          </div>
+        
+          <div class="stat">
+            <h3>Remote</h3>
+            <p>User Assistance</p>
+          </div>
+        
+          <div class="stat">
+            <h3>Multi</h3>
+            <p>Device & System Support</p>
+          </div>
         </div>
       </div>
     </div>
@@ -561,15 +805,55 @@
         <span>Expertise</span>
         <h2>Technical Skills</h2>
       </div>
+
       <div class="skills-grid">
-        <div class="skill-card reveal"><div class="skill-icon">💻</div><h3>IT Support & Helpdesk</h3><p>Support end user, ticket handling, dan problem solving.</p></div>
-        <div class="skill-card reveal"><div class="skill-icon">🛠️</div><h3>Hardware Troubleshooting</h3><p>PC, laptop, peripheral, dan preventive maintenance.</p></div>
-        <div class="skill-card reveal"><div class="skill-icon">🪟</div><h3>Windows OS</h3><p>Instalasi, konfigurasi, aplikasi, dan maintenance sistem.</p></div>
-        <div class="skill-card reveal"><div class="skill-icon">🌐</div><h3>Network Support</h3><p>LAN, WiFi, IP address, dan troubleshooting koneksi.</p></div>
-        <div class="skill-card reveal"><div class="skill-icon">🖨️</div><h3>Printer Support</h3><p>Printer, peripheral, driver, dan perangkat operasional.</p></div>
-        <div class="skill-card reveal"><div class="skill-icon">📡</div><h3>Remote Support</h3><p>Bantuan teknis jarak jauh untuk user dan project.</p></div>
-        <div class="skill-card reveal"><div class="skill-icon">🧾</div><h3>Documentation</h3><p>Laporan teknis, checklist, dan operational reporting.</p></div>
-        <div class="skill-card reveal"><div class="skill-icon">🤝</div><h3>Communication</h3><p>Komunikasi user, koordinasi tim, dan service quality.</p></div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">💻</div>
+          <h3>IT Support & Helpdesk</h3>
+          <p>End-user support, ticket handling, and structured problem solving.</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">🛠️</div>
+          <h3>Hardware Troubleshooting</h3>
+          <p>PC, laptop, peripheral support, and preventive maintenance.</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">🪟</div>
+          <h3>Windows OS</h3>
+          <p>Windows installation, configuration, application setup, and system maintenance.</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">🌐</div>
+          <h3>Network Support</h3>
+          <p>LAN, Wi-Fi, IP address configuration, and connectivity troubleshooting.</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">🖨️</div>
+          <h3>Printer Support</h3>
+          <p>Printer, peripheral, driver, and operational device support.</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">📡</div>
+          <h3>Remote Support</h3>
+          <p>Remote technical assistance for users and project requirements.</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">🧾</div>
+          <h3>Documentation</h3>
+          <p>Technical reports, checklists, and operational documentation.</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">🤝</div>
+          <h3>Communication</h3>
+          <p>User communication, team coordination, and service quality.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -578,61 +862,76 @@
     <div class="container">
       <div class="section-heading reveal">
         <span>Career</span>
-        <h2>Pengalaman Kerja</h2>
+        <h2>Work Experience</h2>
       </div>
+
       <div class="timeline">
         <article class="job-card reveal">
           <div class="job-top">
-            <div><h3>IT Support</h3><p class="company">PT Reycom Integrated Solusi</p></div>
+            <div>
+              <h3>IT Support</h3>
+              <p class="company">PT Reycom Integrated Solusi</p>
+            </div>
             <span class="date">Nov 2019 – Present</span>
           </div>
+
           <ul>
-            <li>Memberikan technical support untuk hardware, software, network, operational system, dan end user.</li>
-            <li>Install, konfigurasi, dan maintenance Windows OS, aplikasi, dan peripheral devices.</li>
-            <li>Troubleshooting serta preventive maintenance komputer, laptop, printer, dan perangkat networking.</li>
-            <li>Support device deployment, setup, calibration, monitoring, dan inspeksi teknis untuk mengurangi downtime.</li>
-            <li>Memberikan bantuan teknis onsite dan remote untuk user dan kebutuhan project operasional.</li>
+            <li>Provided technical support for hardware, software, network, operational systems, and end users.</li>
+            <li>Installed, configured, and maintained Windows OS, applications, and peripheral devices.</li>
+            <li>Troubleshot and performed preventive maintenance for computers, laptops, printers, and networking devices.</li>
+            <li>Supported device deployment, setup, calibration, monitoring, and technical inspections to reduce downtime.</li>
+            <li>Delivered on-site and remote technical assistance for users and operational project requirements.</li>
           </ul>
+
           <div class="highlight-list">
             <span class="pill">Fargo Card Printer</span>
             <span class="pill">ADM Dukcapil</span>
             <span class="pill">Digital Signage</span>
             <span class="pill">e-KTP Reader</span>
-            <span class="pill">Digital BCA Machine</span>
+            <span class="pill">BCA CS Digital</span>
           </div>
         </article>
 
         <article class="job-card reveal">
           <div class="job-top">
-            <div><h3>Chef De Partie / Senior Cook</h3><p class="company">Fedwell Healthy Food</p></div>
+            <div>
+              <h3>Chef De Partie / Senior Cook</h3>
+              <p class="company">Fedwell Healthy Food</p>
+            </div>
             <span class="date">Apr 2018 – Nov 2019</span>
           </div>
           <ul>
-            <li>Bertanggung jawab pada food preparation dan proses memasak sesuai standar restoran.</li>
-            <li>Menjaga kualitas, konsistensi, hygiene, dan presentation standard.</li>
-            <li>Mendukung inventory monitoring dan preparation bahan untuk operasional harian.</li>
+            <li>Managed food preparation and cooking processes in line with restaurant standards.</li>
+            <li>Maintained food quality, consistency, hygiene, and presentation standards.</li>
+            <li>Supported inventory monitoring and ingredient preparation for daily operations.</li>
           </ul>
         </article>
 
         <article class="job-card reveal">
           <div class="job-top">
-            <div><h3>Supervisor</h3><p class="company">Hokaido / Secret Recipe Indonesia</p></div>
+            <div>
+              <h3>Supervisor</h3>
+              <p class="company">Hokaido / Secret Recipe Indonesia</p>
+            </div>
             <span class="date">Feb 2017 – Apr 2018</span>
           </div>
           <ul>
-            <li>Supervisi aktivitas operasional harian dan menjaga standar kualitas layanan.</li>
-            <li>Mengatur jadwal karyawan, koordinasi tanggung jawab tim, dan operational reporting.</li>
+            <li>Supervised daily operations and maintained service quality standards.</li>
+            <li>Managed staff scheduling, team responsibility coordination, and operational reporting.</li>
           </ul>
         </article>
 
         <article class="job-card reveal">
           <div class="job-top">
-            <div><h3>Crew</h3><p class="company">McDonald's</p></div>
+            <div>
+              <h3>Crew</h3>
+              <p class="company">McDonald's</p>
+            </div>
             <span class="date">Jan 2011 – Dec 2013</span>
           </div>
           <ul>
-            <li>Menyiapkan pesanan customer sesuai standar perusahaan dan menjaga kebersihan area operasional.</li>
-            <li>Bekerja sama dengan tim untuk memastikan customer service berjalan efisien.</li>
+            <li>Prepared customer orders according to company standards and maintained operational area cleanliness.</li>
+            <li>Collaborated with the team to ensure efficient customer service delivery.</li>
           </ul>
         </article>
       </div>
@@ -644,11 +943,133 @@
       <div class="section-heading reveal">
         <span>Portfolio</span>
         <h2>Project & Device Support</h2>
+        <p class="section-subtitle">
+          Field technical support, device deployment, troubleshooting, and maintenance experience.
+        </p>
       </div>
-      <div class="projects-grid">
-        <div class="project-card reveal"><h3>Digital BCA Machine Project</h3><p>Support deployment, troubleshooting operasional, monitoring perangkat, dan koordinasi dengan tim terkait.</p></div>
-        <div class="project-card reveal"><h3>e-KTP Reader & ADM</h3><p>Setup perangkat, pengecekan koneksi, calibration, dan support kendala teknis untuk operasional sistem.</p></div>
-        <div class="project-card reveal"><h3>Printer & Digital Signage</h3><p>Maintenance printer, instalasi driver, pengecekan display system, dan preventive maintenance perangkat.</p></div>
+  
+      <div class="portfolio-group">
+        <div class="projects-grid">
+          <div class="project-card reveal">
+            <div class="project-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M3 10h18" />
+                <path d="M5 10v9" />
+                <path d="M9 10v9" />
+                <path d="M15 10v9" />
+                <path d="M19 10v9" />
+                <path d="M4 19h16" />
+                <path d="M12 4 4 8h16l-8-4Z" />
+              </svg>
+            </div>
+            <h3>BCA CS Digital</h3>
+            <p>
+              Field support for deployment, operational troubleshooting, device testing,
+              and coordination with internal teams.
+            </p>
+            <span class="project-tag">System Support</span>
+          </div>
+
+          <div class="project-card reveal">
+            <div class="project-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="4" y="5" width="16" height="14" rx="2" />
+                <path d="M8 9h3" />
+                <path d="M8 13h8" />
+                <path d="M8 16h5" />
+                <circle cx="16.5" cy="9.5" r="1.5" />
+              </svg>
+            </div>
+            <h3>e-KTP Reader & ADM</h3>
+            <p>
+              Device setup, connection checking, calibration, and technical support
+              for operational identity service systems.
+            </p>
+            <span class="project-tag">Device Deployment</span>
+          </div>
+
+          <div class="project-card reveal">
+            <div class="project-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="6" y="3" width="12" height="6" rx="1" />
+                <rect x="5" y="13" width="14" height="8" rx="1" />
+                <path d="M7 13V9h10v4" />
+                <path d="M8 17h8" />
+                <path d="M17 13h2" />
+              </svg>
+            </div>
+            <h3>Printer & Digital Signage</h3>
+            <p>
+              Printer maintenance, driver installation, display system checking,
+              and preventive maintenance for operational devices.
+            </p>
+            <span class="project-tag">Preventive Maintenance</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-group">
+        <h3 class="portfolio-title">Technical Activities</h3>
+        <div class="activity-grid">
+          <div class="project-card activity-card reveal">
+            <div class="activity-thumb">
+              <img src="./Fargo HDP5000 Maintenance.jpg" alt="Fargo HDP5000 maintenance activity">
+              <span class="activity-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-3-3 2.8-2.8Z" />
+                </svg>
+              </span>
+            </div>
+            <h3>Fargo HDP5000 Maintenance</h3>
+          </div>
+
+          <div class="project-card activity-card reveal">
+            <div class="activity-thumb">
+              <img src="./Rakornas Dukcapil.jpg" alt="Rakornas Dukcapil technical activity">
+              <span class="activity-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M8 21v-3" />
+                  <path d="M16 21v-3" />
+                  <rect x="3" y="4" width="18" height="14" rx="2" />
+                  <path d="M8 9h8" />
+                  <path d="M8 13h5" />
+                </svg>
+              </span>
+            </div>
+            <h3>Rakornas Dukcapil</h3>
+          </div>
+
+          <div class="project-card activity-card reveal">
+            <div class="activity-thumb">
+              <img src="./ADM Deployment.jpg" alt="ADM deployment activity">
+              <span class="activity-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="4" y="4" width="16" height="16" rx="2" />
+                  <path d="M8 9h8" />
+                  <path d="M8 13h8" />
+                  <path d="M8 17h4" />
+                </svg>
+              </span>
+            </div>
+            <h3>ADM Deployment</h3>
+          </div>
+
+          <div class="project-card activity-card reveal">
+            <div class="activity-thumb">
+              <img src="./Digital Signage Installation.jpg" alt="Digital signage installation activity">
+              <span class="activity-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="4" width="18" height="12" rx="2" />
+                  <path d="M8 20h8" />
+                  <path d="M12 16v4" />
+                  <path d="M8 8h8" />
+                  <path d="M8 12h5" />
+                </svg>
+              </span>
+            </div>
+            <h3>Digital Signage Installation</h3>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -657,12 +1078,24 @@
     <div class="container">
       <div class="section-heading reveal">
         <span>Education</span>
-        <h2>Pendidikan</h2>
+        <h2>Education</h2>
       </div>
+
       <div class="education-grid">
-        <div class="education-card reveal"><h3>UPN Veteran Jakarta</h3><p>Mechanical Engineering<br>Incomplete Degree<br>2009 – 2011</p></div>
-        <div class="education-card reveal"><h3>SMK Sasmita Jaya 2</h3><p>Mechanical Engineering<br>Graduated in 2009</p></div>
-        <div class="education-card reveal"><h3>Language</h3><p>Indonesia<br>English</p></div>
+        <div class="education-card reveal">
+          <h3>UPN Veteran Jakarta</h3>
+          <p>Mechanical Engineering<br>Incomplete Degree<br>2009 – 2011</p>
+        </div>
+
+        <div class="education-card reveal">
+          <h3>SMK Sasmita Jaya 2</h3>
+          <p>Mechanical Engineering<br>Graduated in 2009</p>
+        </div>
+
+        <div class="education-card reveal">
+          <h3>Languages</h3>
+          <p>Indonesian<br>English</p>
+        </div>
       </div>
     </div>
   </section>
@@ -670,19 +1103,22 @@
   <section id="contact" class="contact-section">
     <div class="container contact-box">
       <div class="reveal">
-        <span class="badge">Contact Me</span>
-        <h2>Siap untuk peluang kerja IT Support</h2>
-        <p>Silakan hubungi saya untuk kebutuhan interview, offering, atau diskusi peluang kerja.</p>
+        <span class="badge">Contact</span>
+        <h2>Get in Touch</h2>
+        <p>With 5+ years of experience in IT Support, device deployment,
+          printer troubleshooting, and field technical operations,
+          I am ready to contribute to your organization's technology needs.</p>
+
         <div class="btn-row">
-          <a class="btn btn-primary" href="mailto:agansulisfiana@gmail.com">Kirim Email</a>
+          <a class="btn btn-primary" href="mailto:agansulisfiana@gmail.com">Send Email</a>
           <a class="btn btn-outline" href="https://wa.me/6282299900282" target="_blank">WhatsApp</a>
+          <a class="btn btn-outline" href="https://www.linkedin.com/in/agan-it-support" target="_blank">LinkedIn Profile</a>
         </div>
       </div>
+
       <div class="contact-list reveal">
-        <p>📞 0822 9990 0282</p>
         <p>✉️ agansulisfiana@gmail.com</p>
-        <p>📍 Manunggal II, Pesanggrahan, Jakarta Selatan, DKI Jakarta</p>
-        <p>🔗 www.linkedin.com/in/agan-it-support</p>
+        <p>📍 South Jakarta, DKI Jakarta</p>
       </div>
     </div>
   </section>
@@ -694,6 +1130,90 @@
   <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
   <script>
+    // Animated technology background
+    const canvas = document.getElementById('tech-bg');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createParticles() {
+      particles = [];
+      const total = Math.min(90, Math.floor(window.innerWidth / 18));
+
+      for (let i = 0; i < total; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          radius: Math.random() * 1.8 + 0.8
+        });
+      }
+    }
+
+    function drawTechBackground() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const gradient = ctx.createRadialGradient(
+        canvas.width * 0.75,
+        canvas.height * 0.2,
+        0,
+        canvas.width * 0.75,
+        canvas.height * 0.2,
+        canvas.width * 0.75
+      );
+      gradient.addColorStop(0, 'rgba(37, 99, 235, 0.28)');
+      gradient.addColorStop(0.45, 'rgba(15, 23, 42, 0.25)');
+      gradient.addColorStop(1, 'rgba(2, 6, 23, 1)');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.72)';
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 130) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(56, 189, 248, ${0.16 - distance / 900})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(drawTechBackground);
+    }
+
+    resizeCanvas();
+    createParticles();
+    drawTechBackground();
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      createParticles();
+    });
+
     const title = document.getElementById('typing-title');
     const roles = ['IT Support', 'Helpdesk Support', 'Technical Support', 'Network & Printer Support'];
     let roleIndex = 0;
@@ -705,6 +1225,7 @@
       title.textContent = deleting ? current.slice(0, charIndex--) : current.slice(0, charIndex++);
 
       if (!deleting && charIndex > current.length + 8) deleting = true;
+
       if (deleting && charIndex < 0) {
         deleting = false;
         roleIndex = (roleIndex + 1) % roles.length;
@@ -712,26 +1233,35 @@
 
       setTimeout(typeRole, deleting ? 45 : 80);
     }
+
     typeRole();
 
     const revealItems = document.querySelectorAll('.reveal');
+
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('show');
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
       });
     }, { threshold: 0.12 });
+
     revealItems.forEach(item => observer.observe(item));
 
     const backToTop = document.getElementById('backToTop');
+
     window.addEventListener('scroll', () => {
       backToTop.classList.toggle('show', window.scrollY > 500);
 
       document.querySelectorAll('section[id]').forEach(section => {
         const id = section.getAttribute('id');
         const link = document.querySelector(`.nav-menu a[href="#${id}"]`);
+
         if (!link) return;
+
         const top = section.offsetTop - 130;
         const bottom = top + section.offsetHeight;
+
         link.classList.toggle('active', window.scrollY >= top && window.scrollY < bottom);
       });
     });
