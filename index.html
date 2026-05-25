@@ -16,6 +16,7 @@
 
     html {
       scroll-behavior: smooth;
+      background: #090913;
     }
 
     body {
@@ -35,25 +36,18 @@
       margin: auto;
     }
 
-    #tech-bg {
+    #vanta-bg {
       position: fixed;
       inset: 0;
       width: 100%;
       height: 100%;
-      z-index: -2;
-      background: #020617;
+      z-index: 0;
+      background: #090913;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background-image:
-        linear-gradient(rgba(56, 189, 248, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
-      background-size: 42px 42px;
-      pointer-events: none;
+    body > :not(#vanta-bg) {
+      position: relative;
+      z-index: 1;
     }
 
     .navbar {
@@ -716,7 +710,7 @@
 </head>
 
 <body>
-  <canvas id="tech-bg"></canvas>
+  <div id="vanta-bg"></div>
   <nav class="navbar">
     <div class="container nav-content">
       <div class="logo">AGAN SULISFIANA</div>
@@ -1041,7 +1035,7 @@
 
           <div class="project-card activity-card reveal">
             <div class="activity-thumb">
-              <img src="./ADM Deployment.jpg" alt="ADM deployment activity">
+              <img src="./adm-deployment.jpg" alt="ADM deployment activity">
               <span class="activity-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <rect x="4" y="4" width="16" height="16" rx="2" />
@@ -1129,90 +1123,23 @@
 
   <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
+  <script src="three.r134.min.js"></script>
+  <script src="vanta.net.min.js"></script>
   <script>
-    // Animated technology background
-    const canvas = document.getElementById('tech-bg');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    if (window.VANTA && window.VANTA.NET) {
+      VANTA.NET({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: 0x2347e3,
+        backgroundColor: 0x090913
+      });
     }
-
-    function createParticles() {
-      particles = [];
-      const total = Math.min(90, Math.floor(window.innerWidth / 18));
-
-      for (let i = 0; i < total; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.45,
-          vy: (Math.random() - 0.5) * 0.45,
-          radius: Math.random() * 1.8 + 0.8
-        });
-      }
-    }
-
-    function drawTechBackground() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const gradient = ctx.createRadialGradient(
-        canvas.width * 0.75,
-        canvas.height * 0.2,
-        0,
-        canvas.width * 0.75,
-        canvas.height * 0.2,
-        canvas.width * 0.75
-      );
-      gradient.addColorStop(0, 'rgba(37, 99, 235, 0.28)');
-      gradient.addColorStop(0.45, 'rgba(15, 23, 42, 0.25)');
-      gradient.addColorStop(1, 'rgba(2, 6, 23, 1)');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(56, 189, 248, 0.72)';
-        ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 130) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(56, 189, 248, ${0.16 - distance / 900})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
-      }
-
-      requestAnimationFrame(drawTechBackground);
-    }
-
-    resizeCanvas();
-    createParticles();
-    drawTechBackground();
-
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-      createParticles();
-    });
 
     const title = document.getElementById('typing-title');
     const roles = ['IT Support', 'Helpdesk Support', 'Technical Support', 'Network & Printer Support'];
