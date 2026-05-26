@@ -1,0 +1,3 @@
+[submodule "pos-kasir"]
+	path = pos-kasir
+	url = https://github.com/Agansulisfiana/pos-kasir.git
