@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,707 +6,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <title>Agan Sulisfiana | IT Support Portfolio</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Manrope', sans-serif;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      background: #090913;
-    }
-
-    body {
-      background: transparent;
-      color: #0b0b0b;
-      line-height: 1.7;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .container {
-      width: 92%;
-      max-width: 1180px;
-      margin: auto;
-    }
-
-    #vanta-bg {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      background: #090913;
-    }
-
-    body > :not(#vanta-bg) {
-      position: relative;
-      z-index: 1;
-    }
-
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      background: rgba(15, 23, 42, 0.96);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 30px rgba(15, 23, 42, 0.2);
-    }
-
-    .nav-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 0;
-      color: #fff;
-    }
-
-    .logo {
-      font-weight: 800;
-      letter-spacing: 1px;
-      font-size: 18px;
-    }
-
-    .nav-menu {
-      display: flex;
-      gap: 22px;
-      list-style: none;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .nav-menu a {
-      color: #cbd5e1;
-      transition: 0.3s;
-    }
-
-    .nav-menu a:hover,
-    .nav-menu a.active {
-      color: #38bdf8;
-    }
-
-    .hero {
-      min-height: 88vh;
-      display: flex;
-      align-items: center;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(17, 24, 39, 0.88) 55%, rgba(30, 58, 138, 0.86));
-      color: white;
-      padding: 80px 0;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.35fr 0.9fr;
-      gap: 46px;
-      align-items: center;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 8px 14px;
-      background: rgba(56, 189, 248, 0.14);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: 999px;
-      color: #7dd3fc;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      font-size: clamp(38px, 7vw, 68px);
-      line-height: 1.05;
-      margin-bottom: 14px;
-    }
-
-    .hero h2 {
-      color: #38bdf8;
-      font-size: clamp(18px, 3vw, 28px);
-      margin-bottom: 18px;
-      min-height: 38px;
-    }
-
-    .hero p {
-      color: #dbeafe;
-      max-width: 700px;
-      font-size: 16px;
-      margin-bottom: 28px;
-    }
-
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 13px 20px;
-      border-radius: 12px;
-      font-weight: 800;
-      transition: 0.3s;
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background: #38bdf8;
-      color: #082f49;
-      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.35);
-    }
-
-    .btn-outline {
-      border-color: rgba(255, 255, 255, 0.35);
-      color: white;
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-    }
-
-    .profile-card {
-      background: rgba(255, 255, 255, 0.09);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 28px;
-      padding: 32px;
-      text-align: center;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
-    }
-
-    .profile-photo {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 5px solid #38bdf8;
-      box-shadow: 0 20px 45px rgba(56, 189, 248, 0.25);
-      margin-bottom: 20px;
-      background: #e5e7eb;
-    }
-
-    .profile-card h3 {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    .profile-card p {
-      margin: 0;
-      color: #cbd5e1;
-    }
-
-    .contact-mini {
-      margin-top: 22px;
-      display: grid;
-      gap: 10px;
-      text-align: left;
-      color: #e5e7eb;
-      font-size: 14px;
-    }
-
-    section {
-      padding: 78px 0;
-    }
-
-    .section-heading {
-      text-align: center;
-      margin-bottom: 42px;
-    }
-
-    .section-heading span {
-      color: #38bdf8;
-      font-size: 13px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-    }
-
-    .section-heading h2 {
-      font-size: clamp(28px, 4vw, 42px);
-      color: #f8f9fa;
-      margin-top: 6px;
-    }
-
-    .about-card {
-      background: white;
-      padding: 34px;
-      border-radius: 24px;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
-      border: 1px solid #e5e7eb;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-top: 26px;
-    }
-
-    .stat {
-  background: linear-gradient(180deg, #ffffff, #f8fafc);
-  border: 1px solid #e2e8f0;
-  border-radius: 20px;
-  padding: 24px 18px;
-  text-align: center;
-  transition: .3s ease;
-}
-
-.stat:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 18px 35px rgba(15, 23, 42, .08);
-}
-
-.stat h3 {
-  color: #2563eb;
-  font-size: 30px;
-  margin-bottom: 6px;
-}
-
-.stat p {
-  color: #64748b;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .skill-card,
-    .job-card,
-    .education-card,
-    .project-card {
-      background: white;
-      border-radius: 22px;
-      padding: 24px;
-      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.07);
-      border: 1px solid #e5e7eb;
-      position: relative;
-      overflow: visible;
-      transition: 0.3s;
-    }
-
-    .skill-card:hover,
-    .project-card:hover,
-    .job-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 22px 50px rgba(15, 23, 42, 0.12);
-    }
-
-    .skill-icon {
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: #e0f2fe;
-      color: #0369a1;
-      font-size: 24px;
-      margin-bottom: 14px;
-    }
-
-    .skill-card h3 {
-      color: #0f172a;
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
-
-    .skill-card p {
-      color: #64748b;
-      font-size: 14px;
-    }
-
-    .timeline {
-      display: grid;
-      gap: 22px;
-      position: relative;
-    }
-
-    .job-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-
-    .job-top h3 {
-      font-size: 21px;
-      color: #0f172a;
-    }
-
-    .company {
-      color: #2563eb;
-      font-weight: 800;
-    }
-
-    .date {
-      background: #eff6ff;
-      color: #1d4ed8;
-      padding: 7px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
-      height: fit-content;
-    }
-
-    .job-card ul {
-      margin-left: 20px;
-      color: #374151;
-    }
-
-    .job-card li {
-      margin-bottom: 7px;
-    }
-
-    .highlight-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .pill {
-      background: #f1f5f9;
-      color: #334155;
-      border: 1px solid #e2e8f0;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .projects-grid,
-    .activity-grid,
-    .education-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      overflow: visible;
-      position: relative;
-    }
-
-    .portfolio-group + .portfolio-group {
-      margin-top: 42px;
-    }
-
-    .portfolio-title {
-      color: #f8f9fa;
-      font-size: 24px;
-      margin-bottom: 18px;
-    }
-
-    .section-subtitle {
-      max-width: 680px;
-      margin: 10px auto 0;
-      color: #cbd5e1;
-      font-size: 15px;
-    }
-
-    .activity-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .project-card {
-      z-index: 1;
-    }
-
-    .project-card:hover {
-      z-index: 1000;
-    }
-
-    .project-card:has(.project-hover:hover) {
-      z-index: 99999;
-    }
-
-    .project-card h3,
-    .education-card h3 {
-      color: #0f172a;
-      margin-bottom: 10px;
-    }
-
-    .project-card p,
-    .education-card p {
-      color: #64748b;
-      font-size: 14px;
-    }
-
-    .project-icon {
-      width: 50px;
-      height: 50px;
-      display: grid;
-      place-items: center;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #e0f2fe, #eff6ff);
-      color: #0369a1;
-      margin-bottom: 14px;
-      box-shadow: inset 0 0 0 1px rgba(14, 165, 233, 0.16);
-    }
-
-    .project-icon svg,
-    .activity-icon svg {
-      width: 26px;
-      height: 26px;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .project-tag {
-      display: inline-block;
-      margin-top: 16px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #e0f2fe;
-      color: #0369a1;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .activity-card {
-      padding: 0;
-      overflow: hidden;
-    }
-
-    .activity-thumb {
-      position: relative;
-    }
-
-    .activity-card img {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      display: block;
-      background: #e5e7eb;
-    }
-
-    .activity-icon {
-      position: absolute;
-      left: 14px;
-      bottom: 14px;
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: rgba(248, 250, 252, 0.94);
-      color: #0369a1;
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
-      backdrop-filter: blur(10px);
-    }
-
-    .activity-card h3 {
-      color: #0f172a;
-      font-size: 15px;
-      padding: 16px;
-      margin: 0;
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-    }
-
-    /* .project-hover {
-      display: inline-block;
-      position: relative;
-      margin-top: 14px;
-      color: #38bdf8;
-      font-weight: 800;
-      cursor: pointer;
-      border-bottom: 1px dashed rgba(56, 189, 248, .6);
-    } */
-
-    .project-preview {
-      position: absolute;
-      left: 50%;
-      bottom: calc(100% + 18px);
-      width: 420px;
-      max-width: 80vw;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateX(-50%) translateY(12px) scale(.96);
-      transition: .3s ease;
-      z-index: 999999;
-      pointer-events: none;
-    }
-
-    .project-preview img {
-      width: 100%;
-      display: block;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.18);
-      box-shadow:
-        0 25px 50px rgba(0,0,0,.38),
-        0 0 25px rgba(56,189,248,.28);
-    }
-
-    .project-caption {
-      margin-top: 10px;
-      background: rgba(15, 23, 42, .96);
-      color: white;
-      padding: 12px 15px;
-      border-radius: 12px;
-      font-size: 13px;
-      line-height: 1.5;
-      box-shadow: 0 16px 35px rgba(15,23,42,.25);
-    }
-
-    .project-hover:hover .project-preview {
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(-50%) translateY(0) scale(1);
-    }
-
-    .contact-section {
-      background: #0f172a;
-      color: white;
-    }
-
-    .contact-box {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      align-items: center;
-    }
-
-    .contact-box h2 {
-      font-size: 34px;
-      margin-bottom: 10px;
-    }
-
-    .contact-box p {
-      color: #cbd5e1;
-    }
-
-    .contact-list {
-      display: grid;
-      gap: 12px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 24px;
-      border-radius: 22px;
-    }
-
-    .footer {
-      background: #020617;
-      color: #94a3b8;
-      text-align: center;
-      padding: 24px 0;
-      font-size: 14px;
-    }
-
-    .reveal {
-      opacity: 0;
-    }
-
-    .reveal.show {
-      opacity: 1;
-      animation: fadeUp .7s ease forwards;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-
-      to {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
-    .back-to-top {
-      position: fixed;
-      right: 22px;
-      bottom: 22px;
-      width: 48px;
-      height: 48px;
-      border: 0;
-      border-radius: 50%;
-      background: #38bdf8;
-      color: #082f49;
-      font-size: 24px;
-      font-weight: 900;
-      cursor: pointer;
-      display: none;
-      box-shadow: 0 16px 35px rgba(56, 189, 248, 0.4);
-      z-index: 9999;
-    }
-
-    .back-to-top.show {
-      display: block;
-    }
-
-    @media (max-width: 920px) {
-      .hero-grid,
-      .contact-box {
-        grid-template-columns: 1fr;
-      }
-
-      .skills-grid,
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .projects-grid,
-      .activity-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .education-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .nav-menu {
-        display: none;
-      }
-
-      .project-preview {
-        left: 0;
-        transform: translateY(12px) scale(.96);
-      }
-
-      .project-hover:hover .project-preview {
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @media (max-width: 560px) {
-      section {
-        padding: 58px 0;
-      }
-
-      .skills-grid,
-      .projects-grid,
-      .activity-grid,
-      .education-grid,
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .profile-photo {
-        width: 150px;
-        height: 150px;
-      }
-
-      .project-preview {
-        width: 300px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -717,6 +17,7 @@
       <ul class="nav-menu">
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
+        <li><a href="#certifications">Certifications</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#education">Education</a></li>
@@ -727,29 +28,29 @@
 
   <header class="hero">
     <div class="container hero-grid">
-      <div class="hero-text reveal">
-        <span class="badge">Open to Work • IT Support</span>
-        <h1>Agan Sulisfiana</h1>
-        <h2 id="typing-title">IT Support</h2>
-        <p>
+      <div class="hero-text">
+        <span class="badge">Open to Work &bull; IT Support</span>
+        <h1 class="hero-animate hero-name">Agan Sulisfiana</h1>
+        <h2 id="typing-title" class="hero-animate hero-title"></h2>
+        <p class="hero-animate hero-description">
           IT Support professional with hands-on experience in computer, hardware, software,
           network, and printer troubleshooting, device deployment, preventive maintenance,
           and on-site or remote user support.
         </p>
-        <div class="btn-row">
+        <div class="btn-row hero-animate hero-actions">
           <a class="btn btn-primary" href="#contact">Contact Me</a>
-          <a class="btn btn-outline" href="./Resume-Agan-Sulisfiana.pdf" target="_blank">Download Resume</a>
+          <a class="btn btn-outline" href="assets/documents/resume-agan-sulisfiana.pdf" target="_blank">Download Resume</a>
         </div>
       </div>
 
       <div class="profile-card reveal">
-        <img src="./foto-agan.png" alt="Photo of Agan Sulisfiana" class="profile-photo" />
+        <img src="assets/images/profile/foto-agan.png" alt="Photo of Agan Sulisfiana" class="profile-photo" />
         <h3>IT Support</h3>
-        <p>Helpdesk • Networking • Printer Support</p>
+        <p>Helpdesk &bull; Networking &bull; Printer Support</p>
         <div class="contact-mini">
-          <span>✉️ agansulisfiana@gmail.com</span>
-          <span>📍 South Jakarta, DKI Jakarta</span>
-          <span>🔗 linkedin.com/in/agan-it-support</span>
+          <span>&#9993;&#65039; agansulisfiana@gmail.com</span>
+          <span>&#128205; South Jakarta, DKI Jakarta</span>
+          <span>&#128279; linkedin.com/in/agan-it-support</span>
         </div>
       </div>
     </div>
@@ -802,52 +103,116 @@
 
       <div class="skills-grid">
         <div class="skill-card reveal">
-          <div class="skill-icon">💻</div>
+          <div class="skill-icon" aria-hidden="true">&#128187;</div>
           <h3>IT Support & Helpdesk</h3>
           <p>End-user support, ticket handling, and structured problem solving.</p>
         </div>
 
         <div class="skill-card reveal">
-          <div class="skill-icon">🛠️</div>
+          <div class="skill-icon" aria-hidden="true">&#128736;&#65039;</div>
           <h3>Hardware Troubleshooting</h3>
           <p>PC, laptop, peripheral support, and preventive maintenance.</p>
         </div>
 
         <div class="skill-card reveal">
-          <div class="skill-icon">🪟</div>
+          <div class="skill-icon" aria-hidden="true">&#128421;&#65039;</div>
           <h3>Windows OS</h3>
           <p>Windows installation, configuration, application setup, and system maintenance.</p>
         </div>
 
         <div class="skill-card reveal">
-          <div class="skill-icon">🌐</div>
+          <div class="skill-icon" aria-hidden="true">&#127760;</div>
           <h3>Network Support</h3>
           <p>LAN, Wi-Fi, IP address configuration, and connectivity troubleshooting.</p>
         </div>
 
         <div class="skill-card reveal">
-          <div class="skill-icon">🖨️</div>
+          <div class="skill-icon" aria-hidden="true">&#128424;&#65039;</div>
           <h3>Printer Support</h3>
           <p>Printer, peripheral, driver, and operational device support.</p>
         </div>
 
         <div class="skill-card reveal">
-          <div class="skill-icon">📡</div>
+          <div class="skill-icon" aria-hidden="true">&#128225;</div>
           <h3>Remote Support</h3>
           <p>Remote technical assistance for users and project requirements.</p>
         </div>
 
         <div class="skill-card reveal">
-          <div class="skill-icon">🧾</div>
+          <div class="skill-icon" aria-hidden="true">&#129534;</div>
           <h3>Documentation</h3>
           <p>Technical reports, checklists, and operational documentation.</p>
         </div>
 
         <div class="skill-card reveal">
-          <div class="skill-icon">🤝</div>
+          <div class="skill-icon" aria-hidden="true">&#129309;</div>
           <h3>Communication</h3>
           <p>User communication, team coordination, and service quality.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span>Credentials</span>
+        <h2>Certifications</h2>
+        <p class="section-subtitle">
+          Training certificates that support my technical foundation in web technology, programming, and database basics.
+        </p>
+      </div>
+
+      <div class="certificates-grid">
+        <article class="certificate-card reveal">
+          <div class="certificate-thumb">
+            <img src="assets/images/certificates/html.png" alt="HTML certificate">
+          </div>
+          <div class="certificate-info">
+            <span>Training Certificate</span>
+            <h3>HTML</h3>
+          </div>
+        </article>
+
+        <article class="certificate-card reveal">
+          <div class="certificate-thumb">
+            <img src="assets/images/certificates/css.png" alt="CSS certificate">
+          </div>
+          <div class="certificate-info">
+            <span>Training Certificate</span>
+            <h3>CSS</h3>
+          </div>
+        </article>
+
+        <article class="certificate-card reveal">
+          <div class="certificate-thumb">
+            <img src="assets/images/certificates/javascript.png" alt="JavaScript certificate">
+          </div>
+          <div class="certificate-info">
+            <span>Training Certificate</span>
+            <h3>JavaScript</h3>
+          </div>
+        </article>
+
+        <article class="certificate-card reveal">
+          <div class="certificate-thumb">
+            <img src="assets/images/certificates/python.png" alt="Python certificate">
+          </div>
+          <div class="certificate-info">
+            <span>Training Certificate</span>
+            <h3>Python</h3>
+          </div>
+        </article>
+
+        <article class="certificate-card reveal">
+          <div class="certificate-thumb">
+            <img src="assets/images/certificates/sql.png" alt="SQL certificate">
+          </div>
+          <div class="certificate-info">
+            <span>Training Certificate</span>
+            <h3>SQL</h3>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -866,7 +231,7 @@
               <h3>IT Support</h3>
               <p class="company">PT Reycom Integrated Solusi</p>
             </div>
-            <span class="date">Nov 2019 – Present</span>
+            <span class="date">Nov 2019 &ndash; Present</span>
           </div>
 
           <ul>
@@ -892,7 +257,7 @@
               <h3>Chef De Partie / Senior Cook</h3>
               <p class="company">Fedwell Healthy Food</p>
             </div>
-            <span class="date">Apr 2018 – Nov 2019</span>
+            <span class="date">Apr 2018 &ndash; Nov 2019</span>
           </div>
           <ul>
             <li>Managed food preparation and cooking processes in line with restaurant standards.</li>
@@ -907,7 +272,7 @@
               <h3>Supervisor</h3>
               <p class="company">Hokaido / Secret Recipe Indonesia</p>
             </div>
-            <span class="date">Feb 2017 – Apr 2018</span>
+            <span class="date">Feb 2017 &ndash; Apr 2018</span>
           </div>
           <ul>
             <li>Supervised daily operations and maintained service quality standards.</li>
@@ -921,7 +286,7 @@
               <h3>Crew</h3>
               <p class="company">McDonald's</p>
             </div>
-            <span class="date">Jan 2011 – Dec 2013</span>
+            <span class="date">Jan 2011 &ndash; Dec 2013</span>
           </div>
           <ul>
             <li>Prepared customer orders according to company standards and maintained operational area cleanliness.</li>
@@ -1007,7 +372,7 @@
         <div class="activity-grid">
           <div class="project-card activity-card reveal">
             <div class="activity-thumb">
-              <img src="./Fargo HDP5000 Maintenance.jpg" alt="Fargo HDP5000 maintenance activity">
+              <img src="assets/images/projects/fargo-hdp5000-maintenance.jpg" alt="Fargo HDP5000 maintenance activity">
               <span class="activity-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-3-3 2.8-2.8Z" />
@@ -1019,7 +384,7 @@
 
           <div class="project-card activity-card reveal">
             <div class="activity-thumb">
-              <img src="./Rakornas Dukcapil.jpg" alt="Rakornas Dukcapil technical activity">
+              <img src="assets/images/projects/rakornas-dukcapil.jpg" alt="Rakornas Dukcapil technical activity">
               <span class="activity-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <path d="M8 21v-3" />
@@ -1035,7 +400,7 @@
 
           <div class="project-card activity-card reveal">
             <div class="activity-thumb">
-              <img src="./adm-deployment.jpg" alt="ADM deployment activity">
+              <img src="assets/images/projects/adm-deployment.jpg" alt="ADM deployment activity">
               <span class="activity-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <rect x="4" y="4" width="16" height="16" rx="2" />
@@ -1050,7 +415,7 @@
 
           <div class="project-card activity-card reveal">
             <div class="activity-thumb">
-              <img src="./Digital Signage Installation.jpg" alt="Digital signage installation activity">
+              <img src="assets/images/projects/digital-signage-installation.jpg" alt="Digital signage installation activity">
               <span class="activity-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <rect x="3" y="4" width="18" height="12" rx="2" />
@@ -1078,7 +443,7 @@
       <div class="education-grid">
         <div class="education-card reveal">
           <h3>UPN Veteran Jakarta</h3>
-          <p>Mechanical Engineering<br>Incomplete Degree<br>2009 – 2011</p>
+          <p>Mechanical Engineering<br>Incomplete Degree<br>2009 &ndash; 2011</p>
         </div>
 
         <div class="education-card reveal">
@@ -1111,91 +476,22 @@
       </div>
 
       <div class="contact-list reveal">
-        <p>✉️ agansulisfiana@gmail.com</p>
-        <p>📍 South Jakarta, DKI Jakarta</p>
+        <p>&#9993;&#65039; agansulisfiana@gmail.com</p>
+        <p>&#128205; South Jakarta, DKI Jakarta</p>
       </div>
     </div>
   </section>
 
   <footer class="footer">
-    <div class="container">© 2026 Agan Sulisfiana. All Rights Reserved.</div>
+    <div class="container">&copy; 2026 Agan Sulisfiana. All Rights Reserved.</div>
   </footer>
 
-  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
 
-  <script src="three.r134.min.js"></script>
-  <script src="vanta.net.min.js"></script>
-  <script>
-    if (window.VANTA && window.VANTA.NET) {
-      VANTA.NET({
-        el: "#vanta-bg",
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200.00,
-        minWidth: 200.00,
-        scale: 1.00,
-        scaleMobile: 1.00,
-        color: 0x2347e3,
-        backgroundColor: 0x090913
-      });
-    }
-
-    const title = document.getElementById('typing-title');
-    const roles = ['IT Support', 'Helpdesk Support', 'Technical Support', 'Network & Printer Support'];
-    let roleIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-
-    function typeRole() {
-      const current = roles[roleIndex];
-      title.textContent = deleting ? current.slice(0, charIndex--) : current.slice(0, charIndex++);
-
-      if (!deleting && charIndex > current.length + 8) deleting = true;
-
-      if (deleting && charIndex < 0) {
-        deleting = false;
-        roleIndex = (roleIndex + 1) % roles.length;
-      }
-
-      setTimeout(typeRole, deleting ? 45 : 80);
-    }
-
-    typeRole();
-
-    const revealItems = document.querySelectorAll('.reveal');
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-        }
-      });
-    }, { threshold: 0.12 });
-
-    revealItems.forEach(item => observer.observe(item));
-
-    const backToTop = document.getElementById('backToTop');
-
-    window.addEventListener('scroll', () => {
-      backToTop.classList.toggle('show', window.scrollY > 500);
-
-      document.querySelectorAll('section[id]').forEach(section => {
-        const id = section.getAttribute('id');
-        const link = document.querySelector(`.nav-menu a[href="#${id}"]`);
-
-        if (!link) return;
-
-        const top = section.offsetTop - 130;
-        const bottom = top + section.offsetHeight;
-
-        link.classList.toggle('active', window.scrollY >= top && window.scrollY < bottom);
-      });
-    });
-
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  </script>
+  <script src="assets/js/vendor/three.r134.min.js"></script>
+  <script src="assets/js/vendor/vanta.net.min.js"></script>
+  <script src="assets/js/script.js"></script>
 </body>
 </html>
+
+

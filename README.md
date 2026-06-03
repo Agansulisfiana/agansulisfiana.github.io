@@ -50,24 +50,44 @@ Portfolio ini berfokus pada pengalaman sebagai IT Support dengan 5+ tahun pengal
 .
 |-- index.html
 |-- index1.html
-|-- Resume-Agan-Sulisfiana.pdf
-|-- foto-agan.png
-|-- adm-deployment.jpg
-|-- Digital Signage Installation.jpg
-|-- Fargo HDP5000 Maintenance.jpg
-|-- Rakornas Dukcapil.jpg
-|-- three.r134.min.js
-|-- vanta.net.min.js
+|-- README.md
+|-- assets/
+|   |-- css/
+|   |   `-- style.css
+|   |-- documents/
+|   |   `-- resume-agan-sulisfiana.pdf
+|   |-- images/
+|   |   |-- certificates/
+|   |   |   |-- css.png
+|   |   |   |-- html.png
+|   |   |   |-- javascript.png
+|   |   |   |-- python.png
+|   |   |   `-- sql.png
+|   |   |-- profile/
+|   |   |   `-- foto-agan.png
+|   |   `-- projects/
+|   |       |-- adm-deployment.jpg
+|   |       |-- digital-signage-installation.jpg
+|   |       |-- fargo-hdp5000-maintenance.jpg
+|   |       `-- rakornas-dukcapil.jpg
+|   `-- js/
+|       |-- script.js
+|       `-- vendor/
+|           |-- three.r134.min.js
+|           `-- vanta.net.min.js
 |-- pos-kasir/
-`-- README.md
+`-- .gitmodules
 ```
 
 Keterangan:
 
 - `index.html` adalah halaman utama portfolio.
 - `index1.html` adalah versi alternatif atau versi lama portfolio.
-- `Resume-Agan-Sulisfiana.pdf` digunakan untuk tombol download resume.
-- File gambar digunakan sebagai aset visual portfolio dan dokumentasi aktivitas teknis.
+- `assets/css/style.css` berisi styling utama portfolio.
+- `assets/js/script.js` berisi interaksi, animasi, typing effect, dan scroll behavior.
+- `assets/js/vendor/` berisi library lokal Three.js dan Vanta.js untuk background interaktif.
+- `assets/documents/resume-agan-sulisfiana.pdf` digunakan untuk tombol download resume.
+- `assets/images/` berisi foto profil, dokumentasi project, dan gambar sertifikat.
 - `pos-kasir/` adalah submodule project aplikasi POS kasir.
 
 ## Cara Menjalankan di Lokal
