@@ -532,6 +532,26 @@
       z-index: 1000;
     }
 
+    .tilt-card {
+      --tilt-x: 0deg;
+      --tilt-y: 0deg;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .tilt-card:hover {
+      transform:
+        perspective(900px)
+        translateY(-6px)
+        rotateX(var(--tilt-x))
+        rotateY(var(--tilt-y));
+      border-color: rgba(56, 189, 248, .42);
+      box-shadow:
+        0 20px 40px rgba(0,0,0,.2),
+        0 0 25px rgba(56,189,248,.25);
+      z-index: 1000;
+    }
+
     .project-card:has(.project-hover:hover) {
       z-index: 99999;
     }
@@ -833,5 +853,15 @@
 
       .project-preview {
         width: 300px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce), (hover: none) {
+      .tilt-card {
+        will-change: auto;
+      }
+
+      .tilt-card:hover {
+        transform: none;
       }
     }

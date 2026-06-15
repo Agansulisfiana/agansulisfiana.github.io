@@ -97,3 +97,26 @@
     backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    const canTilt = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+      && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (canTilt) {
+      document.querySelectorAll('.tilt-card').forEach(card => {
+        const maxTilt = 2.5;
+
+        card.addEventListener('pointermove', event => {
+          const bounds = card.getBoundingClientRect();
+          const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+          const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+
+          card.style.setProperty('--tilt-x', `${-y * maxTilt * 2}deg`);
+          card.style.setProperty('--tilt-y', `${x * maxTilt * 2}deg`);
+        });
+
+        card.addEventListener('pointerleave', () => {
+          card.style.setProperty('--tilt-x', '0deg');
+          card.style.setProperty('--tilt-y', '0deg');
+        });
+      });
+    }
