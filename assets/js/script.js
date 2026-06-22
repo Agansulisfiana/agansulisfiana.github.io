@@ -17,16 +17,37 @@
     }
 
     const title = document.getElementById('typing-title');
-    const role = 'IT Support Engineer';
+    const roles = ['IT Support Engineer', 'Field Service Engineer', 'Web Development Enthusiast'];
+    let roleIndex = 0;
     let charIndex = 0;
+    let deleting = false;
 
     function typeRole() {
-      title.textContent = role.slice(0, charIndex);
+      const currentRole = roles[roleIndex];
 
-      if (charIndex <= role.length) {
+      title.textContent = currentRole.slice(0, charIndex);
+
+      if (!deleting && charIndex < currentRole.length) {
         charIndex += 1;
         setTimeout(typeRole, 75);
+        return;
       }
+
+      if (!deleting) {
+        deleting = true;
+        setTimeout(typeRole, 1200);
+        return;
+      }
+
+      if (charIndex > 0) {
+        charIndex -= 1;
+        setTimeout(typeRole, 45);
+        return;
+      }
+
+      deleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      setTimeout(typeRole, 250);
     }
 
     setTimeout(typeRole, 1150);
