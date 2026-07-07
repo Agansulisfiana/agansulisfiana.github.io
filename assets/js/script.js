@@ -92,6 +92,16 @@ function animateCounter(counter) {
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
+      /* Staggered reveal: assign incremental delay to siblings in a grid */
+      const parent = entry.target.parentElement;
+      if (parent) {
+        const siblings = Array.from(parent.children).filter(el => el.classList.contains('reveal'));
+        const idx = siblings.indexOf(entry.target);
+        if (idx > -1) {
+          entry.target.style.setProperty('--reveal-delay', `${idx * 0.06}s`);
+        }
+      }
+
       entry.target.classList.add('show');
 
       entry.target.querySelectorAll('.counter').forEach(animateCounter);
@@ -199,5 +209,34 @@ if (navToggle && navMenu) {
     if (window.innerWidth > 920) {
       closeMenu();
     }
+  });
+}
+
+/* ---------- E. Scroll progress bar ---------- */
+const scrollProgress = document.getElementById('scrollProgress');
+
+function updateScrollProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  scrollProgress.style.width = `${progress}%`;
+}
+
+window.addEventListener('scroll', updateScrollProgress, { passive: true });
+updateScrollProgress();
+
+/* ---------- C. Spotlight hover on cards ---------- */
+const canSpotlight = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+  && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (canSpotlight) {
+  document.querySelectorAll('.skill-card, .project-card, .certificate-card, .education-card, .stat').forEach(card => {
+    card.addEventListener('pointermove', event => {
+      const bounds = card.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+      const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+      card.style.setProperty('--spot-x', `${x}%`);
+      card.style.setProperty('--spot-y', `${y}%`);
+    });
   });
 }
