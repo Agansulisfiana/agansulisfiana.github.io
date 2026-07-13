@@ -1246,7 +1246,11 @@ section {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: gradientShift 6s linear infinite;
+  animation-name: heroFadeUp, gradientShift;
+  animation-duration: .7s, 6s;
+  animation-timing-function: var(--ease), linear;
+  animation-delay: .2s, 0s;
+  animation-fill-mode: forwards, none;
 }
 
 @keyframes gradientShift {
