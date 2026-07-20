@@ -27,7 +27,7 @@ Portfolio ini berfokus pada pengalaman sebagai IT Support dengan 5+ tahun pengal
 
 - Tampilan responsive untuk desktop dan mobile
 - Hero section dengan profil singkat dan foto
-- Section About, Skills, Experience, Projects, Education, dan Contact
+- Section About, Skills, Certifications, Experience, Projects, Education, dan Contact
 - Animasi reveal saat scroll
 - Typing effect pada title profesi
 - Background interaktif menggunakan Three.js dan Vanta.js
@@ -49,20 +49,18 @@ Portfolio ini berfokus pada pengalaman sebagai IT Support dengan 5+ tahun pengal
 ```text
 .
 |-- index.html
-|-- index1.html
 |-- README.md
 |-- assets/
 |   |-- css/
+|   |   |-- certifications.css
 |   |   `-- style.css
 |   |-- documents/
 |   |   `-- resume-agan-sulisfiana.pdf
 |   |-- images/
 |   |   |-- certificates/
-|   |   |   |-- css.png
-|   |   |   |-- html.png
-|   |   |   |-- javascript.png
-|   |   |   |-- python.png
-|   |   |   `-- sql.png
+|   |   |   |-- Cisco/
+|   |   |   |-- HID/
+|   |   |   `-- Sololearn/
 |   |   |-- profile/
 |   |   |   `-- foto-agan.png
 |   |   `-- projects/
@@ -71,6 +69,7 @@ Portfolio ini berfokus pada pengalaman sebagai IT Support dengan 5+ tahun pengal
 |   |       |-- fargo-hdp5000-maintenance.jpg
 |   |       `-- rakornas-dukcapil.jpg
 |   `-- js/
+|       |-- certifications.js
 |       |-- script.js
 |       `-- vendor/
 |           |-- three.r134.min.js
@@ -82,9 +81,10 @@ Portfolio ini berfokus pada pengalaman sebagai IT Support dengan 5+ tahun pengal
 Keterangan:
 
 - `index.html` adalah halaman utama portfolio.
-- `index1.html` adalah versi alternatif atau versi lama portfolio.
 - `assets/css/style.css` berisi styling utama portfolio.
+- `assets/css/certifications.css` berisi styling untuk section sertifikasi dan modal.
 - `assets/js/script.js` berisi interaksi, animasi, typing effect, dan scroll behavior.
+- `assets/js/certifications.js` berisi logika untuk menampilkan sertifikat menggunakan modal.
 - `assets/js/vendor/` berisi library lokal Three.js dan Vanta.js untuk background interaktif.
 - `assets/documents/resume-agan-sulisfiana.pdf` digunakan untuk tombol download resume.
 - `assets/images/` berisi foto profil, dokumentasi project, dan gambar sertifikat.

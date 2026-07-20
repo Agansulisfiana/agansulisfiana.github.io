@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    Agan Sulisfiana — Portfolio interactions
    Vanta background · typing effect · counters · reveal ·
    scroll spy · tilt cards · mobile menu
@@ -119,7 +119,7 @@ counters.forEach(counter => {
 /* ---------- Back to top + scroll spy ---------- */
 const backToTop = document.getElementById('backToTop');
 
-window.addEventListener('scroll', () => {
+function handleScrollSpy() {
   backToTop.classList.toggle('show', window.scrollY > 500);
 
   document.querySelectorAll('section[id]').forEach(section => {
@@ -133,7 +133,10 @@ window.addEventListener('scroll', () => {
 
     link.classList.toggle('active', window.scrollY >= top && window.scrollY < bottom);
   });
-});
+}
+
+window.addEventListener('scroll', handleScrollSpy, { passive: true });
+handleScrollSpy();
 
 backToTop.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -183,6 +186,7 @@ if (navToggle && navMenu) {
   /* Close menu when a link is clicked (mobile) */
   navMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
+      setTimeout(() => link.blur(), 150);
       if (navMenu.classList.contains('open')) {
         closeMenu();
       }

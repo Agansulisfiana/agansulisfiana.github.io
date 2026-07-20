@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    Agan Sulisfiana — IT Support Portfolio
    Cohesive Dark Mode (OLED) design system
    Monochrome + blue accent · Inter typography
@@ -124,9 +124,9 @@ body > :not(#vanta-bg):not(.aurora):not(.scroll-progress) {
 
 /* ---------- Navbar ---------- */
 .navbar {
-  position: sticky;
+  position: sticky !important;
   top: 0;
-  z-index: 999;
+  z-index: 999 !important;
   background: rgba(9, 9, 11, 0.82);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -1008,8 +1008,8 @@ section {
   }
 
   .nav-menu {
-    position: fixed;
-    top: var(--nav-h);
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
     flex-direction: column;

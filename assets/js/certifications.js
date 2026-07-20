@@ -20,6 +20,7 @@
     'hid-academy': {
       name: 'HID Academy',
       monogram: 'HA',
+      svg: '<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="10" y="16" width="44" height="32" rx="10" fill="none" stroke="currentColor" stroke-width="4" /><rect x="18" y="22" width="18" height="10" rx="3" fill="currentColor" opacity="0.18" /><rect x="34" y="22" width="10" height="10" rx="2" fill="currentColor" opacity="0.28" /><path d="M18 34h12" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.85" /><path d="M18 40h18" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.6" /></svg>',
       certificates: [
         { title: 'FARGO HDP500e Technical Training',
           file: 'assets/images/certificates/HID/FARGO-HDP500e-Technical-Training_page-0001.jpg' },
@@ -38,6 +39,7 @@
     'sololearn': {
       name: 'SoloLearn',
       monogram: 'SL',
+      svg: '<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="14" y="12" width="36" height="40" rx="10" fill="none" stroke="currentColor" stroke-width="4" /><path d="M24 20h16" stroke="currentColor" stroke-width="3" stroke-linecap="round" /><path d="M22 28h20" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.8" /><path d="M22 36h12" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.65" /><circle cx="44" cy="40" r="6" fill="currentColor" opacity="0.2" /><path d="M44 36v8M40 40h8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" /></svg>',
       certificates: [
         { title: 'HTML', file: 'assets/images/certificates/Sololearn/html.png' },
         { title: 'CSS', file: 'assets/images/certificates/Sololearn/css.png' },
@@ -49,6 +51,7 @@
     'cisco': {
       name: 'Cisco',
       monogram: 'CI',
+      svg: '<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M14 44V28M24 44V32M34 44V24M44 44V30M54 44V36" stroke="currentColor" stroke-width="5" stroke-linecap="round" /><path d="M12 28C22 18 34 12 42 18C50 24 54 30 54 30" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity="0.6" /></svg>',
       certificates: [
         { title: 'Getting Started with Cisco Packet Tracer',
           file: 'assets/images/certificates/Cisco/Getting-Started-with-Cisco-Packet-Tracer-certificate.jpg' }
@@ -78,7 +81,13 @@
 
   /* Generate a certificate-style SVG thumbnail (data URI) that
      matches the portfolio palette, used for PDFs. */
-  function placeholderImage(title, monogram) {
+  /* Generate a certificate-style SVG thumbnail (data URI) that
+     matches the portfolio palette, used for PDFs. */
+  function placeholderImage(title, provider) {
+    var embeddedSvg = provider.svg ? provider.svg.replace('<svg ', '<svg x="176" y="100" width="48" height="48" color="#3b82f6" ') : '';
+    var iconElement = embeddedSvg || ('<text x="200" y="132" text-anchor="middle" font-family="Inter,Arial,sans-serif" ' +
+      'font-size="19" font-weight="800" fill="#3b82f6">' + escapeXml(provider.monogram) + '</text>');
+
     var svg =
       '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">' +
       '<defs><linearGradient id="cbg" x1="0" y1="0" x2="1" y2="1">' +
@@ -93,8 +102,7 @@
       'font-size="11" font-weight="800" fill="#3b82f6">PDF</text>' +
       '<circle cx="200" cy="124" r="34" fill="rgba(37,99,235,0.16)" ' +
       'stroke="rgba(59,130,246,0.45)" stroke-width="1.5"/>' +
-      '<text x="200" y="132" text-anchor="middle" font-family="Inter,Arial,sans-serif" ' +
-      'font-size="19" font-weight="800" fill="#3b82f6">' + escapeXml(monogram) + '</text>' +
+      iconElement +
       '<text x="200" y="190" text-anchor="middle" font-family="Inter,Arial,sans-serif" ' +
       'font-size="15" font-weight="700" fill="#fafafa">' + escapeXml(title) + '</text>' +
       '<text x="200" y="214" text-anchor="middle" font-family="Inter,Arial,sans-serif" ' +
@@ -107,9 +115,9 @@
 
   /* Thumbnail source: real image for raster certs, generated
      placeholder for PDFs. The lightbox always opens the real file. */
-  function certThumb(cert, monogram) {
+  function certThumb(cert, provider) {
     if (cert.file && !isPdf(cert.file)) return cert.file;
-    return placeholderImage(cert.title, monogram);
+    return placeholderImage(cert.title, provider);
   }
 
   function plural(n) {
@@ -183,7 +191,7 @@
     var arrow = '\u2192';
     provider.certificates.forEach(function (cert, i) {
       var file = cert.file;
-      var thumb = certThumb(cert, provider.monogram);
+      var thumb = certThumb(cert, provider);
       var alt = cert.title + ' certificate';
       var delay = reduceMotion ? 0 : Math.min(i * 0.05, 0.4);
       html +=
@@ -237,7 +245,8 @@
     if (ctaBtn) ctaBtn.classList.add('is-open');
 
     /* Populate panel */
-    panelLogo.textContent = provider.monogram;
+    panelLogo.className = 'cert-collection-logo cert-provider-logo--' + providerId;
+    panelLogo.innerHTML = provider.svg || provider.monogram;
     panelTitle.textContent = provider.name;
     panelSubtitle.textContent = plural(provider.certificates.length) +
       ' \u00b7 ' + provider.name;

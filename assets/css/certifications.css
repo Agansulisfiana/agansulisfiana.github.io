@@ -274,8 +274,12 @@
   background: var(--accent-soft);
   color: var(--accent-bright);
   border: 1px solid var(--accent-border);
-  font-weight: 800;
-  font-size: 15px;
+  overflow: hidden;
+}
+
+.cert-collection-logo svg {
+  width: 26px;
+  height: 26px;
 }
 
 .cert-collection-title {

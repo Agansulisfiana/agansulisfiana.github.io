@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09090b" />
+      <stop offset="100%" stop-color="#111114" />
+    </linearGradient>
+    <linearGradient id="fg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="120" fill="url(#bg)" />
+  
+  <!-- Outer Shield / Hexagon (Tech/Security vibe) -->
+  <path d="M 256 72 L 408 152 L 408 344 L 256 424 L 104 344 L 104 152 Z" fill="none" stroke="url(#fg)" stroke-width="36" stroke-linejoin="round" opacity="0.8"/>
+  
+  <!-- Abstract "A" inside -->
+  <path d="M 256 136 L 344 296 L 168 296 Z" fill="none" stroke="url(#fg)" stroke-width="36" stroke-linejoin="round" />
+  <path d="M 256 392 L 256 296" fill="none" stroke="url(#fg)" stroke-width="36" stroke-linecap="round" />
+</svg>
