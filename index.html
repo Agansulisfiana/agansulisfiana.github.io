@@ -10,6 +10,7 @@
   <title>Agan Sulisfiana | IT Support Portfolio</title>
 
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/certifications.css">
 </head>
 
 <body>
@@ -202,62 +203,76 @@
   <section id="certifications">
     <div class="container">
       <div class="section-heading reveal">
-        <span>Credentials</span>
-        <h2>Certifications</h2>
+        <span>Certifications</span>
+        <h2>Professional Certifications</h2>
         <p class="section-subtitle">
-          Training certificates that support my technical foundation in web technology, programming, and database basics.
+          Professional certifications organized by training provider.
         </p>
       </div>
 
-      <div class="certificates-grid">
-        <article class="certificate-card reveal">
-          <div class="certificate-thumb">
-            <img src="assets/images/certificates/html.png" alt="HTML certificate" loading="lazy" width="400" height="300" />
+      <div class="cert-providers">
+        <article class="cert-provider-card reveal">
+          <div class="cert-provider-head">
+            <span class="cert-provider-logo cert-provider-logo--hid" aria-hidden="true">
+              <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <rect x="10" y="16" width="44" height="32" rx="10" fill="none" stroke="currentColor" stroke-width="4" />
+                <rect x="18" y="22" width="18" height="10" rx="3" fill="currentColor" opacity="0.18" />
+                <rect x="34" y="22" width="10" height="10" rx="2" fill="currentColor" opacity="0.28" />
+                <path d="M18 34h12" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                <path d="M18 40h18" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.6" />
+              </svg>
+            </span>
+            <div class="cert-provider-meta">
+              <h3>HID Academy</h3>
+              <span class="cert-provider-count">6 Certificates</span>
+            </div>
           </div>
-          <div class="certificate-info">
-            <span>Training Certificate</span>
-            <h3>HTML</h3>
-          </div>
+          <p class="cert-provider-desc">Professional printer & secure identity training.</p>
+          <button type="button" class="cert-provider-cta" data-provider="hid-academy">
+            View Collection <span class="cert-arrow">&rarr;</span>
+          </button>
         </article>
 
-        <article class="certificate-card reveal">
-          <div class="certificate-thumb">
-            <img src="assets/images/certificates/css.png" alt="CSS certificate" loading="lazy" width="400" height="300" />
+        <article class="cert-provider-card reveal">
+          <div class="cert-provider-head">
+            <span class="cert-provider-logo cert-provider-logo--sololearn" aria-hidden="true">
+              <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <rect x="14" y="12" width="36" height="40" rx="10" fill="none" stroke="currentColor" stroke-width="4" />
+                <path d="M24 20h16" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                <path d="M22 28h20" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.8" />
+                <path d="M22 36h12" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.65" />
+                <circle cx="44" cy="40" r="6" fill="currentColor" opacity="0.2" />
+                <path d="M44 36v8M40 40h8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+              </svg>
+            </span>
+            <div class="cert-provider-meta">
+              <h3>SoloLearn</h3>
+              <span class="cert-provider-count">5 Certificates · SoloLearn</span>
+            </div>
           </div>
-          <div class="certificate-info">
-            <span>Training Certificate</span>
-            <h3>CSS</h3>
-          </div>
+          <p class="cert-provider-desc">Programming and web development courses.</p>
+          <button type="button" class="cert-provider-cta" data-provider="sololearn">
+            View Collection <span class="cert-arrow">&rarr;</span>
+          </button>
         </article>
 
-        <article class="certificate-card reveal">
-          <div class="certificate-thumb">
-            <img src="assets/images/certificates/javascript.png" alt="JavaScript certificate" loading="lazy" width="400" height="300" />
+        <article class="cert-provider-card reveal">
+          <div class="cert-provider-head">
+            <span class="cert-provider-logo cert-provider-logo--cisco" aria-hidden="true">
+              <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <path d="M14 44V28M24 44V32M34 44V24M44 44V30M54 44V36" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+                <path d="M12 28C22 18 34 12 42 18C50 24 54 30 54 30" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity="0.6" />
+              </svg>
+            </span>
+            <div class="cert-provider-meta">
+              <h3>Cisco</h3>
+              <span class="cert-provider-count">1 Certificate</span>
+            </div>
           </div>
-          <div class="certificate-info">
-            <span>Training Certificate</span>
-            <h3>JavaScript</h3>
-          </div>
-        </article>
-
-        <article class="certificate-card reveal">
-          <div class="certificate-thumb">
-            <img src="assets/images/certificates/python.png" alt="Python certificate" loading="lazy" width="400" height="300" />
-          </div>
-          <div class="certificate-info">
-            <span>Training Certificate</span>
-            <h3>Python</h3>
-          </div>
-        </article>
-
-        <article class="certificate-card reveal">
-          <div class="certificate-thumb">
-            <img src="assets/images/certificates/sql.png" alt="SQL certificate" loading="lazy" width="400" height="300" />
-          </div>
-          <div class="certificate-info">
-            <span>Training Certificate</span>
-            <h3>SQL</h3>
-          </div>
+          <p class="cert-provider-desc">Networking fundamentals and IT infrastructure.</p>
+          <button type="button" class="cert-provider-cta" data-provider="cisco">
+            View Collection <span class="cert-arrow">&rarr;</span>
+          </button>
         </article>
       </div>
     </div>
@@ -515,5 +530,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
   <script src="assets/js/script.js"></script>
+  <script src="assets/js/certifications.js"></script>
 </body>
 </html>
