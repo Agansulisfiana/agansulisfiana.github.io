@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://agansulisfiana.github.io/sitemap.xml
