@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <title>Agan Sulisfiana | IT Support Portfolio</title>
+  <link rel="canonical" href="https://agansulisfiana.github.io/" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
@@ -26,8 +27,24 @@
   <meta property="twitter:description" content="IT Support professional with 5+ years experience in hardware, software, network troubleshooting, printer support, and field technical operations.">
   <meta property="twitter:image" content="https://agansulisfiana.github.io/assets/images/profile/foto-agan.png">
 
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/certifications.css">
+  <link rel="stylesheet" href="assets/css/style.min.css">
+  <link rel="stylesheet" href="assets/css/certifications.min.css">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Agan Sulisfiana",
+    "jobTitle": "IT Support Professional",
+    "url": "https://agansulisfiana.github.io/",
+    "image": "https://agansulisfiana.github.io/assets/images/profile/foto-agan.png",
+    "sameAs": [
+      "https://www.linkedin.com/in/agan-it-support"
+    ],
+    "description": "IT Support professional with 5+ years experience in hardware, software, network troubleshooting, printer support, and field technical operations."
+  }
+  </script>
 </head>
 
 <body>
@@ -78,12 +95,12 @@
         </p>
         <div class="btn-row hero-animate hero-actions">
           <a class="btn btn-primary" href="#contact">Contact Me</a>
-          <a class="btn btn-outline" href="assets/documents/resume-agan-sulisfiana.pdf" target="_blank" rel="noopener">Download Resume</a>
+          <a class="btn btn-outline" href="assets/documents/resume-agan-sulisfiana.pdf" target="_blank" rel="noopener noreferrer">Download Resume</a>
         </div>
       </div>
 
       <div class="profile-card reveal">
-        <img src="assets/images/profile/foto-agan.png" alt="Photo of Agan Sulisfiana" class="profile-photo" width="180" height="180" />
+        <img src="assets/images/profile/foto-agan.png" alt="Photo of Agan Sulisfiana" loading="lazy" class="profile-photo" width="180" height="180" />
         <h3>IT Support</h3>
         <p>Helpdesk &bull; Networking &bull; Printer Support</p>
         <div class="contact-mini">
@@ -265,7 +282,7 @@
             </span>
             <div class="cert-provider-meta">
               <h3>SoloLearn</h3>
-              <span class="cert-provider-count">5 Certificates · SoloLearn</span>
+              <span class="cert-provider-count">5 Certificates</span>
             </div>
           </div>
           <p class="cert-provider-desc">Programming and web development courses.</p>
@@ -510,30 +527,85 @@
   </section>
 
   <section id="contact" class="contact-section">
-    <div class="container contact-box">
-      <div class="reveal">
-        <span class="badge">Contact</span>
+    <div class="container">
+      <div class="section-heading reveal">
+        <span>Contact</span>
         <h2>Get in Touch</h2>
-        <p>With 5+ years of experience in IT Support, device deployment,
+        <p class="section-subtitle">
+          With 5+ years of experience in IT Support, device deployment,
           printer troubleshooting, and field technical operations,
-          I am ready to contribute to your organization's technology needs.</p>
-
-        <div class="btn-row">
-          <a class="btn btn-primary" href="mailto:agansulisfiana@gmail.com">Send Email</a>
-          <a class="btn btn-outline" href="https://wa.me/6282299900282" target="_blank" rel="noopener">WhatsApp</a>
-          <a class="btn btn-outline" href="https://www.linkedin.com/in/agan-it-support" target="_blank" rel="noopener">LinkedIn Profile</a>
-        </div>
+          I am ready to contribute to your organization's technology needs.
+        </p>
       </div>
 
-      <div class="contact-list reveal">
-        <p class="contact-list-item">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
-          agansulisfiana@gmail.com
-        </p>
-        <p class="contact-list-item">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-          South Jakarta, DKI Jakarta
-        </p>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <div class="contact-list">
+            <a href="mailto:agansulisfiana@gmail.com" class="contact-list-item">
+              <span class="contact-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+              </span>
+              <div>
+                <h4>Email</h4>
+                <p>agansulisfiana@gmail.com</p>
+              </div>
+            </a>
+            
+            <a href="https://wa.me/6282299900282" target="_blank" rel="noopener noreferrer" class="contact-list-item">
+              <span class="contact-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+              </span>
+              <div>
+                <h4>WhatsApp</h4>
+                <p>+62 822 9990 0282</p>
+              </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/agan-it-support" target="_blank" rel="noopener noreferrer" class="contact-list-item">
+              <span class="contact-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              </span>
+              <div>
+                <h4>LinkedIn</h4>
+                <p>linkedin.com/in/agan-it-support</p>
+              </div>
+            </a>
+
+            <div class="contact-list-item">
+              <span class="contact-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              </span>
+              <div>
+                <h4>Location</h4>
+                <p>South Jakarta, DKI Jakarta</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-container reveal">
+          <form class="contact-form" action="https://formspree.io/f/mojgwwyl" method="POST">
+            <!-- Honeypot Anti-Spam -->
+            <input type="text" name="_gotcha" style="display:none" />
+            
+            <div class="form-group">
+              <label for="name">Nama Lengkap</label>
+              <input type="text" id="name" name="name" required placeholder="Masukkan nama Anda">
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required placeholder="Masukkan email Anda">
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Pesan</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Tuliskan pesan Anda di sini..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-full">Kirim Pesan</button>
+          </form>
+        </div>
       </div>
     </div>
   </section>
@@ -547,7 +619,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
-  <script src="assets/js/script.js"></script>
-  <script src="assets/js/certifications.js"></script>
+  <script src="assets/js/script.min.js"></script>
+  <script src="assets/js/certifications.min.js"></script>
 </body>
 </html>

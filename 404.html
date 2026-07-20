@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Page not found." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>404 - Page Not Found | Agan Sulisfiana</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/style.min.css">
+  <style>
+    .not-found-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      padding: 2rem;
+    }
+
+    .not-found-container h1 {
+      font-size: clamp(4rem, 15vw, 8rem);
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+
+    .not-found-container h2 {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      margin-bottom: 2rem;
+      color: var(--text-secondary);
+    }
+    
+    .not-found-container p {
+      max-width: 500px;
+      margin-bottom: 2.5rem;
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="vanta-bg" aria-hidden="true"></div>
+  <div class="aurora" aria-hidden="true">
+    <span class="aurora-blob aurora-blob-1"></span>
+    <span class="aurora-blob aurora-blob-2"></span>
+    <span class="aurora-blob aurora-blob-3"></span>
+  </div>
+
+  <div class="not-found-container reveal">
+    <h1 class="gradient-text">404</h1>
+    <h2>Halaman Tidak Ditemukan</h2>
+    <p>Maaf, halaman yang Anda cari tidak ada, telah dihapus, namanya diubah, atau untuk sementara tidak tersedia.</p>
+    <a href="index.html" class="btn btn-primary">Kembali ke Beranda</a>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+  <script src="assets/js/script.min.js"></script>
+</body>
+</html>
