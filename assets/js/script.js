@@ -24,8 +24,11 @@ if (window.VANTA && window.VANTA.NET) {
 }
 
 /* ---------- Typing effect for hero title ---------- */
+const isID = document.documentElement.lang === 'id';
 const title = document.getElementById('typing-title');
-const roles = ['IT Support Engineer', 'Field Service Engineer', 'Web Development Enthusiast'];
+const roles = isID 
+  ? ['IT Support Engineer', 'Teknisi Lapangan', 'Peminat Web Development']
+  : ['IT Support Engineer', 'Field Service Engineer', 'Web Development Enthusiast'];
 let roleIndex = 0;
 let charIndex = 0;
 let deleting = false;
@@ -173,14 +176,14 @@ const navMenu = document.getElementById('navMenu');
 function closeMenu() {
   navMenu.classList.remove('open');
   navToggle.setAttribute('aria-expanded', 'false');
-  navToggle.setAttribute('aria-label', 'Open menu');
+  navToggle.setAttribute('aria-label', isID ? 'Buka menu' : 'Open menu');
 }
 
 if (navToggle && navMenu) {
   navToggle.addEventListener('click', () => {
     const isOpen = navMenu.classList.toggle('open');
     navToggle.setAttribute('aria-expanded', String(isOpen));
-    navToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    navToggle.setAttribute('aria-label', isOpen ? (isID ? 'Tutup menu' : 'Close menu') : (isID ? 'Buka menu' : 'Open menu'));
   });
 
   /* Close menu when a link is clicked (mobile) */
