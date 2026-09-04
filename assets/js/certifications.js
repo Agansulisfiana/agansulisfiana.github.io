@@ -57,6 +57,21 @@
           file: 'assets/images/certificates/Cisco/Getting-Started-with-Cisco-Packet-Tracer-certificate.jpg' }
       ]
     }
+    ,
+    'sentuh': {
+      name: 'Sentuh',
+      monogram: 'SN',
+      svg: '<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">' +
+           '<rect x="8" y="8" width="48" height="48" rx="10" fill="none" stroke="currentColor" stroke-width="3" />' +
+           '<path d="M22 36c2-6 6-10 14-12" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none" />' +
+           '<circle cx="42" cy="22" r="6" fill="currentColor" opacity="0.18" />' +
+           '<path d="M36 30c4-2 6-6 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />' +
+           '<text x="32" y="46" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="currentColor">SN</text>' +
+           '</svg>',
+      certificates: [
+        { title: 'Sentuh — Participation Certificate', file: 'assets/images/certificates/Sentuh/certificate_sentuh_agan.jpg' }
+      ]
+    }
   };
 
   var TRANSITION_MS = 420;
