@@ -1,12 +1,14 @@
 /**
- * Shooting Stars & Cosmic Stardust Engine
- * Designed for Agan Sulisfiana's Cyber Dark Portfolio
+ * Shooting Star & Cosmic Stardust Engine
+ * Inspired by CodePen "Shooting Star" (forked by Agansulisfiana from Ko.Yelie)
+ * "Your mouse (or finger) will be a shooting star"
  * 
- * Features:
- * - High-speed diagonal shooting stars with cyan/blue trailing gradients
- * - Multi-depth twinkling background starfield
- * - Interactive cursor stardust trail with click burst effects
- * - Performance optimized (HiDPI support, rAF pause on hidden tab, zero DOM thrashing)
+ * Styled specifically to match the cyber dark portfolio theme:
+ * - Electric Cyan (#38bdf8), Royal Blue (#2563eb), Ice Blue (#e0f2fe), Pure White (#ffffff)
+ * - The mouse/touch cursor acts as an active shooting star with a glowing head flare,
+ *   luminous comet tail ribbon, and trailing stardust sparks.
+ * - Periodic background meteors streak across the dark cosmos.
+ * - Pointer-events: none, strictly fixed positioning, zero layout displacement.
  */
 
 (function initShootingStars() {
@@ -27,6 +29,9 @@
     }
   }
 
+  // Enforce rigid fixed positioning so it never displaces any DOM elements
+  canvas.style.cssText = 'position:fixed!important;top:0!important;left:0!important;width:100vw!important;height:100vh!important;pointer-events:none!important;z-index:1!important;mix-blend-mode:screen!important;display:block!important;margin:0!important;padding:0!important;overflow:hidden!important;';
+
   const ctx = canvas.getContext('2d', { alpha: true });
   if (!ctx) return;
 
@@ -34,7 +39,7 @@
   let height = 0;
   let dpr = 1;
 
-  // Color Palettes matching portfolio
+  // Portfolio Cyan-Blue Color Palette
   const PALETTE = {
     white: '255, 255, 255',
     iceBlue: '224, 242, 254',
@@ -45,16 +50,26 @@
 
   // State
   const backgroundStars = [];
-  const shootingStars = [];
-  const cursorParticles = [];
+  const meteors = [];
+  const stardustParticles = [];
+  const mouseTrail = [];
+  const maxTrailPoints = 22;
+
   let lastSpawnTime = 0;
-  let nextSpawnDelay = 1400;
+  let nextMeteorDelay = 2200;
   let isTabVisible = true;
   let animationFrameId = null;
 
-  // Track mouse
-  let mouse = { x: -100, y: -100, isMoving: false };
-  let mouseTimer = null;
+  // Mouse & Touch Tracking
+  const mouse = {
+    x: -500,
+    y: -500,
+    prevX: -500,
+    prevY: -500,
+    speed: 0,
+    lastActive: 0,
+    isHovering: false
+  };
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -63,8 +78,8 @@
 
     canvas.width = Math.floor(width * dpr);
     canvas.height = Math.floor(height * dpr);
-    canvas.style.width = width + 'px';
-    canvas.style.height = height + 'px';
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
 
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
@@ -72,52 +87,50 @@
     initBackgroundStars();
   }
 
-  // --- Background Twinkling Stars ---
+  // --- Background Twinkling Constellation Stars ---
   function initBackgroundStars() {
     backgroundStars.length = 0;
-    const starCount = Math.floor(Math.min(width, 1920) * 0.08); // Balanced density
+    const count = Math.floor(Math.min(width, 1920) * 0.07);
 
-    for (let i = 0; i < starCount; i++) {
+    for (let i = 0; i < count; i++) {
       backgroundStars.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        size: Math.random() * 1.5 + 0.5,
-        alpha: Math.random() * 0.7 + 0.2,
+        size: Math.random() * 1.4 + 0.5,
+        baseAlpha: Math.random() * 0.6 + 0.25,
         twinkleSpeed: Math.random() * 0.02 + 0.008,
-        twinklePhase: Math.random() * Math.PI * 2,
-        color: Math.random() > 0.4 ? PALETTE.iceBlue : (Math.random() > 0.5 ? PALETTE.cyan : PALETTE.white)
+        phase: Math.random() * Math.PI * 2,
+        color: Math.random() > 0.5 ? PALETTE.iceBlue : (Math.random() > 0.5 ? PALETTE.cyan : PALETTE.white)
       });
     }
   }
 
-  // --- Shooting Star Entity ---
-  class ShootingStar {
-    constructor(customX, customY, customAngle) {
-      // Diagonal trajectory: downwards to the left (angle ~ 140deg to 155deg)
-      this.angle = customAngle !== undefined ? customAngle : (Math.PI * 0.78 + (Math.random() * 0.15 - 0.07));
-      
-      // Spawn around top-right quadrant
-      if (customX !== undefined && customY !== undefined) {
-        this.x = customX;
-        this.y = customY;
+  // --- Background Ambient Meteor (Shooting Star) ---
+  class Meteor {
+    constructor(startX, startY, customAngle) {
+      this.angle = customAngle !== undefined ? customAngle : (Math.PI * 0.76 + (Math.random() * 0.16 - 0.08));
+
+      if (startX !== undefined && startY !== undefined) {
+        this.x = startX;
+        this.y = startY;
       } else {
-        const fromTop = Math.random() > 0.45;
+        const fromTop = Math.random() > 0.4;
         if (fromTop) {
-          this.x = Math.random() * (width * 0.8) + (width * 0.2);
-          this.y = -20;
+          this.x = Math.random() * (width * 0.85) + (width * 0.15);
+          this.y = -30;
         } else {
-          this.x = width + 20;
-          this.y = Math.random() * (height * 0.6);
+          this.x = width + 30;
+          this.y = Math.random() * (height * 0.65);
         }
       }
 
-      this.speed = Math.random() * 10 + 14; // Fast & fluid streak
-      this.length = Math.random() * 90 + 130; // 130px - 220px long tail
-      this.size = Math.random() * 1.2 + 1.6;
+      this.speed = Math.random() * 9 + 14;
+      this.length = Math.random() * 90 + 130;
+      this.size = Math.random() * 1.2 + 1.8;
       this.opacity = 1;
       this.life = 0;
-      this.maxLife = Math.random() * 35 + 45; // Frames before finish
-      this.color = Math.random() > 0.3 ? PALETTE.cyan : PALETTE.iceBlue;
+      this.maxLife = Math.random() * 32 + 42;
+      this.color = Math.random() > 0.4 ? PALETTE.cyan : PALETTE.iceBlue;
     }
 
     update() {
@@ -125,9 +138,21 @@
       this.y += Math.sin(this.angle) * this.speed;
       this.life++;
 
-      // Fade out smoothly towards end of lifetime
-      if (this.life > this.maxLife * 0.6) {
-        this.opacity = Math.max(0, 1 - (this.life - this.maxLife * 0.6) / (this.maxLife * 0.4));
+      if (this.life > this.maxLife * 0.65) {
+        this.opacity = Math.max(0, 1 - (this.life - this.maxLife * 0.65) / (this.maxLife * 0.35));
+      }
+
+      // Occasionally drop stardust along meteor trajectory
+      if (Math.random() > 0.6 && stardustParticles.length < 80) {
+        stardustParticles.push(new Stardust(
+          this.x + (Math.random() - 0.5) * 4,
+          this.y + (Math.random() - 0.5) * 4,
+          -Math.cos(this.angle) * 1.5 + (Math.random() - 0.5),
+          -Math.sin(this.angle) * 1.5 + (Math.random() - 0.5),
+          PALETTE.cyan,
+          Math.random() * 1.6 + 0.8,
+          24
+        ));
       }
 
       return this.life <= this.maxLife && this.x >= -this.length && this.y <= height + this.length;
@@ -139,11 +164,10 @@
       const tailX = this.x - Math.cos(this.angle) * this.length;
       const tailY = this.y - Math.sin(this.angle) * this.length;
 
-      // Draw shooting star tail with smooth luminous gradient
       const gradient = context.createLinearGradient(tailX, tailY, this.x, this.y);
       gradient.addColorStop(0, `rgba(${PALETTE.blue}, 0)`);
-      gradient.addColorStop(0.3, `rgba(${PALETTE.blue}, ${0.25 * this.opacity})`);
-      gradient.addColorStop(0.7, `rgba(${this.color}, ${0.75 * this.opacity})`);
+      gradient.addColorStop(0.35, `rgba(${PALETTE.blue}, ${0.3 * this.opacity})`);
+      gradient.addColorStop(0.75, `rgba(${this.color}, ${0.8 * this.opacity})`);
       gradient.addColorStop(0.95, `rgba(${PALETTE.iceBlue}, ${0.95 * this.opacity})`);
       gradient.addColorStop(1, `rgba(${PALETTE.white}, ${this.opacity})`);
 
@@ -155,42 +179,41 @@
       context.lineWidth = this.size;
       context.lineCap = 'round';
       context.shadowColor = `rgba(${PALETTE.cyan}, ${0.8 * this.opacity})`;
-      context.shadowBlur = 8;
+      context.shadowBlur = 10;
       context.stroke();
 
-      // Glowing head
+      // Glowing meteor head
       context.beginPath();
-      context.arc(this.x, this.y, this.size * 1.5, 0, Math.PI * 2);
+      context.arc(this.x, this.y, this.size * 1.6, 0, Math.PI * 2);
       context.fillStyle = `rgba(${PALETTE.white}, ${this.opacity})`;
       context.shadowColor = `rgba(${PALETTE.cyan}, ${this.opacity})`;
-      context.shadowBlur = 12;
+      context.shadowBlur = 14;
       context.fill();
-
       context.restore();
     }
   }
 
-  // --- Interactive Stardust Particle ---
-  class StardustParticle {
+  // --- Stardust Spark Particles ---
+  class Stardust {
     constructor(x, y, vx, vy, color, size, maxLife) {
       this.x = x;
       this.y = y;
-      this.vx = vx || (Math.random() - 0.5) * 1.5;
-      this.vy = vy || (Math.random() - 0.5) * 1.5;
+      this.vx = vx;
+      this.vy = vy;
+      this.color = color || (Math.random() > 0.5 ? PALETTE.cyan : PALETTE.white);
       this.size = size || (Math.random() * 2 + 1);
-      this.color = color || (Math.random() > 0.5 ? PALETTE.cyan : PALETTE.iceBlue);
       this.life = 0;
-      this.maxLife = maxLife || Math.floor(Math.random() * 25 + 30);
-      this.opacity = 0.9;
+      this.maxLife = maxLife || Math.floor(Math.random() * 24 + 28);
+      this.opacity = 1;
     }
 
     update() {
       this.x += this.vx;
       this.y += this.vy;
-      this.vx *= 0.96;
-      this.vy *= 0.96;
+      this.vx *= 0.94;
+      this.vy *= 0.94;
       this.life++;
-      this.opacity = Math.max(0, 1 - this.life / this.maxLife);
+      this.opacity = Math.max(0, 1 - (this.life / this.maxLife));
       return this.life <= this.maxLife;
     }
 
@@ -198,77 +221,179 @@
       if (this.opacity <= 0.01) return;
       context.save();
       context.beginPath();
-      context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      context.fillStyle = `rgba(${this.color}, ${this.opacity * 0.75})`;
-      context.shadowColor = `rgba(${PALETTE.cyan}, ${this.opacity * 0.6})`;
+      context.arc(this.x, this.y, this.size * this.opacity, 0, Math.PI * 2);
+      context.fillStyle = `rgba(${this.color}, ${this.opacity * 0.85})`;
+      context.shadowColor = `rgba(${PALETTE.cyan}, ${this.opacity * 0.7})`;
       context.shadowBlur = 6;
       context.fill();
       context.restore();
     }
   }
 
-  // Handle pointer interactions
+  // Helper: Draw 4-point Diamond Star Glint (Shooting Star Core)
+  function drawStarGlint(context, cx, cy, spikes, outerRadius, innerRadius, color, alpha) {
+    context.save();
+    context.beginPath();
+    let rot = Math.PI / 2 * 3;
+    let step = Math.PI / spikes;
+
+    context.moveTo(cx, cy - outerRadius);
+    for (let i = 0; i < spikes; i++) {
+      let x = cx + Math.cos(rot) * outerRadius;
+      let y = cy + Math.sin(rot) * outerRadius;
+      context.lineTo(x, y);
+      rot += step;
+
+      x = cx + Math.cos(rot) * innerRadius;
+      y = cy + Math.sin(rot) * innerRadius;
+      context.lineTo(x, y);
+      rot += step;
+    }
+    context.lineTo(cx, cy - outerRadius);
+    context.closePath();
+    context.fillStyle = `rgba(${color}, ${alpha})`;
+    context.shadowColor = `rgba(${PALETTE.cyan}, ${alpha})`;
+    context.shadowBlur = 12;
+    context.fill();
+    context.restore();
+  }
+
+  // --- Pointer Move: Update Cursor as a Shooting Star ---
   function onPointerMove(e) {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-    mouse.isMoving = true;
+    const x = e.clientX;
+    const y = e.clientY;
+    const now = performance.now();
 
-    clearTimeout(mouseTimer);
-    mouseTimer = setTimeout(() => {
-      mouse.isMoving = false;
-    }, 120);
+    if (mouse.x > -100) {
+      const dx = x - mouse.prevX;
+      const dy = y - mouse.prevY;
+      mouse.speed = Math.min(Math.sqrt(dx * dx + dy * dy), 40);
+    }
 
-    // Spawn 1-2 subtle stardust particles on motion (rate capped)
-    if (cursorParticles.length < 50 && Math.random() > 0.3) {
-      cursorParticles.push(new StardustParticle(
-        mouse.x + (Math.random() - 0.5) * 6,
-        mouse.y + (Math.random() - 0.5) * 6,
-        (Math.random() - 0.5) * 1.2,
-        (Math.random() - 0.5) * 1.2 + 0.3,
-        Math.random() > 0.4 ? PALETTE.cyan : PALETTE.iceBlue,
-        Math.random() * 1.8 + 1,
-        35
-      ));
+    mouse.prevX = mouse.x;
+    mouse.prevY = mouse.y;
+    mouse.x = x;
+    mouse.y = y;
+    mouse.lastActive = now;
+    mouse.isHovering = true;
+
+    // Add to comet ribbon history
+    mouseTrail.unshift({
+      x: x,
+      y: y,
+      time: now,
+      speed: mouse.speed
+    });
+
+    if (mouseTrail.length > maxTrailPoints) {
+      mouseTrail.pop();
+    }
+
+    // Spawn trailing stardust sparks based on motion speed
+    if (mouse.speed > 1.8 && stardustParticles.length < 90) {
+      const sparkCount = mouse.speed > 12 ? 2 : 1;
+      for (let s = 0; s < sparkCount; s++) {
+        stardustParticles.push(new Stardust(
+          x + (Math.random() - 0.5) * 6,
+          y + (Math.random() - 0.5) * 6,
+          (Math.random() - 0.5) * 1.5 - (x - mouse.prevX) * 0.12,
+          (Math.random() - 0.5) * 1.5 - (y - mouse.prevY) * 0.12,
+          Math.random() > 0.4 ? PALETTE.cyan : PALETTE.iceBlue,
+          Math.random() * 2 + 1,
+          32
+        ));
+      }
     }
   }
 
+  function onPointerLeave() {
+    mouse.isHovering = false;
+  }
+
+  // Click / Tap: Mini Starburst Explosion
   function onPointerDown(e) {
-    // Mini cosmic starburst on click
-    const count = 10;
+    const count = 14;
     for (let i = 0; i < count; i++) {
       const angle = (Math.PI * 2 / count) * i + (Math.random() * 0.4 - 0.2);
-      const speed = Math.random() * 2.8 + 1.2;
-      cursorParticles.push(new StardustParticle(
+      const spd = Math.random() * 3.5 + 1.5;
+      stardustParticles.push(new Stardust(
         e.clientX,
         e.clientY,
-        Math.cos(angle) * speed,
-        Math.sin(angle) * speed,
+        Math.cos(angle) * spd,
+        Math.sin(angle) * spd,
         i % 2 === 0 ? PALETTE.cyan : PALETTE.white,
-        Math.random() * 2 + 1.2,
-        45
+        Math.random() * 2.4 + 1.2,
+        42
       ));
     }
 
-    // Chance to spawn a special shooting star originating near click
-    if (shootingStars.length < 3) {
+    // Occasional shooting star fired on click
+    if (meteors.length < 3) {
       const angle = Math.PI * 0.75 + (Math.random() * 0.2 - 0.1);
-      shootingStars.push(new ShootingStar(e.clientX, e.clientY, angle));
+      meteors.push(new Meteor(e.clientX, e.clientY, angle));
     }
   }
 
-  window.addEventListener('pointermove', onPointerMove, { passive: true });
-  window.addEventListener('pointerdown', onPointerDown, { passive: true });
-
-  // Handle Visibility change to pause rendering when tab is unfocused
-  document.addEventListener('visibilitychange', () => {
-    isTabVisible = document.visibilityState === 'visible';
-    if (isTabVisible && !animationFrameId) {
-      lastSpawnTime = performance.now();
-      loop(lastSpawnTime);
+  // --- Render Mouse Shooting Star Ribbon Trail ---
+  function renderCursorShootingStar(context, now) {
+    // Prune stale trail points older than 260ms
+    while (mouseTrail.length > 0 && now - mouseTrail[mouseTrail.length - 1].time > 260) {
+      mouseTrail.pop();
     }
-  });
 
-  // Main Render Loop
+    if (mouseTrail.length > 1) {
+      for (let i = 0; i < mouseTrail.length - 1; i++) {
+        const p1 = mouseTrail[i];
+        const p2 = mouseTrail[i + 1];
+
+        const progress = i / (mouseTrail.length - 1);
+        const age = (now - p1.time) / 260;
+        const alpha = Math.max(0, (1 - age) * (1 - progress * 0.7));
+
+        if (alpha <= 0.01) continue;
+
+        const lineWidth = Math.max(0.6, (1 - progress) * 4.5);
+
+        context.save();
+        context.beginPath();
+        context.moveTo(p1.x, p1.y);
+        context.lineTo(p2.x, p2.y);
+        context.strokeStyle = i === 0
+          ? `rgba(${PALETTE.white}, ${alpha})`
+          : (progress < 0.45 ? `rgba(${PALETTE.cyan}, ${alpha * 0.85})` : `rgba(${PALETTE.blue}, ${alpha * 0.5})`);
+        context.lineWidth = lineWidth;
+        context.lineCap = 'round';
+        context.shadowColor = `rgba(${PALETTE.cyan}, ${alpha * 0.8})`;
+        context.shadowBlur = 8;
+        context.stroke();
+        context.restore();
+      }
+    }
+
+    // Draw Glowing Star Head at cursor position if cursor is on screen
+    if (mouse.isHovering && mouse.x > 0 && mouse.y > 0) {
+      const timeSec = now * 0.003;
+      const pulse = Math.sin(timeSec * 4) * 0.15 + 0.85;
+
+      // Outer radial glow
+      const radial = context.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 22);
+      radial.addColorStop(0, `rgba(${PALETTE.cyan}, 0.55)`);
+      radial.addColorStop(0.4, `rgba(${PALETTE.blue}, 0.25)`);
+      radial.addColorStop(1, `rgba(${PALETTE.deepBlue}, 0)`);
+
+      context.save();
+      context.beginPath();
+      context.arc(mouse.x, mouse.y, 22, 0, Math.PI * 2);
+      context.fillStyle = radial;
+      context.fill();
+
+      // 4-point Diamond Star Flare (Twinkling Shooting Star Head)
+      drawStarGlint(context, mouse.x, mouse.y, 4, 7 * pulse, 2.2 * pulse, PALETTE.white, 0.95);
+      context.restore();
+    }
+  }
+
+  // --- Main Animation Loop ---
   function loop(currentTime) {
     if (!isTabVisible) {
       animationFrameId = null;
@@ -277,55 +402,69 @@
 
     ctx.clearRect(0, 0, width, height);
 
-    // 1. Render Background Twinkling Stars
+    // 1. Background Twinkling Constellation Stars
     const timeSec = currentTime * 0.001;
     for (let i = 0; i < backgroundStars.length; i++) {
       const s = backgroundStars[i];
-      const pulse = Math.sin(timeSec * 2 + s.twinklePhase) * 0.35 + 0.65;
-      const currentAlpha = s.alpha * pulse;
+      const pulse = Math.sin(timeSec * 2.5 + s.phase) * 0.35 + 0.65;
+      const alpha = s.baseAlpha * pulse;
 
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${s.color}, ${currentAlpha})`;
+      ctx.fillStyle = `rgba(${s.color}, ${alpha})`;
       ctx.fill();
     }
 
-    // 2. Spawn Random Shooting Stars at Organic Intervals
-    if (currentTime - lastSpawnTime > nextSpawnDelay) {
-      if (shootingStars.length < 3) {
-        shootingStars.push(new ShootingStar());
+    // 2. Periodic Ambient Meteors
+    if (currentTime - lastSpawnTime > nextMeteorDelay) {
+      if (meteors.length < 3) {
+        meteors.push(new Meteor());
       }
       lastSpawnTime = currentTime;
-      nextSpawnDelay = Math.random() * 1800 + 1200; // 1.2s - 3.0s interval
+      nextMeteorDelay = Math.random() * 2200 + 1600; // Natural 1.6s - 3.8s spacing
     }
 
-    // 3. Update & Draw Active Shooting Stars
-    for (let i = shootingStars.length - 1; i >= 0; i--) {
-      const star = shootingStars[i];
-      const isAlive = star.update();
-      if (isAlive) {
-        star.draw(ctx);
+    // 3. Draw Ambient Meteors
+    for (let i = meteors.length - 1; i >= 0; i--) {
+      const meteor = meteors[i];
+      if (meteor.update()) {
+        meteor.draw(ctx);
       } else {
-        shootingStars.splice(i, 1);
+        meteors.splice(i, 1);
       }
     }
 
-    // 4. Update & Draw Interactive Cursor Stardust
-    for (let i = cursorParticles.length - 1; i >= 0; i--) {
-      const p = cursorParticles[i];
-      const isAlive = p.update();
-      if (isAlive) {
-        p.draw(ctx);
+    // 4. Cursor Shooting Star (Ribbon + Star Head)
+    renderCursorShootingStar(ctx, currentTime);
+
+    // 5. Active Stardust Sparks
+    for (let i = stardustParticles.length - 1; i >= 0; i--) {
+      const spark = stardustParticles[i];
+      if (spark.update()) {
+        spark.draw(ctx);
       } else {
-        cursorParticles.splice(i, 1);
+        stardustParticles.splice(i, 1);
       }
     }
 
     animationFrameId = requestAnimationFrame(loop);
   }
 
-  // Handle Resize
+  // Event Listeners
+  window.addEventListener('pointermove', onPointerMove, { passive: true });
+  window.addEventListener('pointerdown', onPointerDown, { passive: true });
+  window.addEventListener('pointerleave', onPointerLeave, { passive: true });
   window.addEventListener('resize', resize, { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    isTabVisible = document.visibilityState === 'visible';
+    if (isTabVisible && !animationFrameId) {
+      lastSpawnTime = performance.now();
+      loop(lastSpawnTime);
+    }
+  });
+
+  // Init
   resize();
   lastSpawnTime = performance.now();
   loop(lastSpawnTime);
