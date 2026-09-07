@@ -30,6 +30,17 @@
   <link rel="stylesheet" href="assets/css/style.min.css">
   <link rel="stylesheet" href="assets/css/certifications.min.css">
   <style>
+    @keyframes dragonPulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.12); opacity: 1; }
+    }
+
+    @keyframes dragonOrbit {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.08); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
     @media (hover: hover) and (pointer: fine) {
       body {
         cursor: auto;
@@ -40,49 +51,72 @@
       input,
       textarea,
       select {
-        cursor: auto;
+        cursor: pointer;
       }
+    }
 
-      .cursor-dot,
-      .cursor-trail,
-      .cursor-glow {
+    .cursor-dragon {
         position: fixed;
-        top: 0;
         left: 0;
+        top: 0;
+        width: 28px;
+        height: 28px;
+        margin-left: -14px;
+        margin-top: -14px;
         pointer-events: none;
-        z-index: 9999;
+        z-index: 2147483647;
         opacity: 0;
-        transition: opacity 0.2s ease;
+        display: none;
+        mix-blend-mode: screen;
+        filter: drop-shadow(0 0 16px rgba(96, 165, 250, 0.9));
       }
 
-      .cursor-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.96);
-        border: 1px solid rgba(59, 130, 246, 0.75);
-        box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.12), 0 0 18px rgba(96, 165, 250, 0.45);
-        transform: translate(-50%, -50%);
-        z-index: 10000;
+      .cursor-core,
+      .cursor-ring,
+      .cursor-tail {
+        position: absolute;
+        left: 0;
+        top: 0;
+        pointer-events: none;
       }
 
-      .cursor-trail {
-        width: 22px;
-        height: 22px;
+      .cursor-core {
+        width: 16px;
+        height: 16px;
         border-radius: 50%;
-        border: 1px solid rgba(96, 165, 250, 0.8);
-        background: rgba(59, 130, 246, 0.12);
-        box-shadow: 0 0 24px rgba(59, 130, 246, 0.24);
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle at 35% 35%, #ffffff 0%, #dbeafe 14%, #7dd3fc 35%, #2563eb 100%);
+        border: 2px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.14), 0 0 24px rgba(96, 165, 250, 0.9), 0 0 48px rgba(37, 99, 235, 0.72);
+        animation: dragonPulse 1.6s ease-in-out infinite;
+      }
+
+      .cursor-ring {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        border: 1.8px solid rgba(147, 197, 253, 0.9);
+        box-shadow: 0 0 18px rgba(96, 165, 250, 0.5), inset 0 0 14px rgba(96, 165, 250, 0.18);
+        transform: translate(-50%, -50%);
+        animation: dragonOrbit 2.4s linear infinite;
+      }
+
+      .cursor-tail {
+        width: 0;
+        height: 0;
         transform: translate(-50%, -50%);
       }
 
-      .cursor-glow {
-        width: 52px;
-        height: 52px;
+      .cursor-tail span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 9px;
+        height: 9px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(147, 197, 253, 0.52) 0%, rgba(59, 130, 246, 0.2) 30%, transparent 72%);
-        filter: blur(2px);
-        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, rgba(191, 219, 254, 0.98) 0%, rgba(96, 165, 250, 0.82) 35%, rgba(37, 99, 235, 0.2) 100%);
+        box-shadow: 0 0 16px rgba(96, 165, 250, 0.52);
+        opacity: 0.75;
       }
 
       body.has-neon-cursor .cursor-trail,
@@ -123,9 +157,7 @@
         cursor: auto;
       }
 
-      .cursor-dot,
-      .cursor-trail,
-      .cursor-glow {
+      .cursor-dragon {
         display: none;
       }
     }
@@ -928,44 +960,76 @@
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const desktopCursor = window.matchMedia('(hover: hover) and (pointer: fine)').matches && !prefersReducedMotion;
 
-      if (desktopCursor) {
-        const dot = document.createElement('div');
-        dot.className = 'cursor-dot';
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        const glow = document.createElement('div');
-        glow.className = 'cursor-glow';
-        document.body.appendChild(dot);
-        document.body.appendChild(trail);
-        document.body.appendChild(glow);
+      if (false && desktopCursor) {
+        const cursor = document.createElement('div');
+        cursor.className = 'cursor-dragon';
+        const core = document.createElement('div');
+        core.className = 'cursor-core';
+        const ring = document.createElement('div');
+        ring.className = 'cursor-ring';
+        const tail = document.createElement('div');
+        tail.className = 'cursor-tail';
+        cursor.appendChild(ring);
+        cursor.appendChild(tail);
+        cursor.appendChild(core);
+        document.body.appendChild(cursor);
+
+        const segments = Array.from({ length: 14 }, () => {
+          const seg = document.createElement('span');
+          tail.appendChild(seg);
+          return seg;
+        });
 
         let pointerX = window.innerWidth / 2;
         let pointerY = window.innerHeight / 2;
-        let trailX = pointerX;
-        let trailY = pointerY;
+        let currentX = pointerX;
+        let currentY = pointerY;
+        let isPressed = false;
 
         const onPointerMove = (event) => {
           pointerX = event.clientX;
           pointerY = event.clientY;
-          dot.style.opacity = '1';
-          glow.style.opacity = '1';
-          trail.style.opacity = '1';
+          cursor.style.opacity = '1';
         };
 
         document.addEventListener('pointermove', onPointerMove, { passive: true });
+        document.addEventListener('pointerdown', () => {
+          isPressed = true;
+        }, { passive: true });
+        document.addEventListener('pointerup', () => {
+          isPressed = false;
+        }, { passive: true });
         document.addEventListener('pointerleave', () => {
-          dot.style.opacity = '0';
-          glow.style.opacity = '0';
-          trail.style.opacity = '0';
+          cursor.style.opacity = '0';
         }, { passive: true });
 
         function animateCursor() {
-          trailX += (pointerX - trailX) * 0.18;
-          trailY += (pointerY - trailY) * 0.18;
+          currentX += (pointerX - currentX) * 0.22;
+          currentY += (pointerY - currentY) * 0.22;
 
-          dot.style.transform = `translate(${pointerX}px, ${pointerY}px) translate(-50%, -50%)`;
-          trail.style.transform = `translate(${trailX}px, ${trailY}px) translate(-50%, -50%)`;
-          glow.style.transform = `translate(${pointerX}px, ${pointerY}px) translate(-50%, -50%)`;
+          const angle = Math.atan2(pointerY - currentY, pointerX - currentX) || 0;
+          const angleDeg = (angle * 180) / Math.PI;
+          const pulse = 1 + Math.sin(Date.now() * 0.012) * 0.18 + (isPressed ? 0.2 : 0);
+
+          cursor.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${angleDeg}deg)`;
+          cursor.style.opacity = '1';
+          cursor.style.display = 'block';
+          ring.style.transform = `translate(-50%, -50%) rotate(${angleDeg * 2}deg) scale(${pulse})`;
+          core.style.transform = `translate(-50%, -50%) scale(${pulse})`;
+
+          segments.forEach((seg, index) => {
+            const spread = (index + 1) * 12;
+            const offsetX = Math.cos(angle) * (spread * -1.2);
+            const offsetY = Math.sin(angle) * (spread * -1.2);
+            const drift = Math.sin((Date.now() * 0.015) + index * 0.9) * 4.5;
+            const x = offsetX + drift;
+            const y = offsetY + drift * 0.7;
+            const scale = 1 - index * 0.07;
+
+            seg.style.transform = `translate(${x}px, ${y}px) scale(${Math.max(scale, 0.32)})`;
+            seg.style.opacity = String(Math.max(0.18, 1 - index * 0.08));
+          });
+
           requestAnimationFrame(animateCursor);
         }
 
