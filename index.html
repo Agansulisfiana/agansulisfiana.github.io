@@ -29,6 +29,184 @@
 
   <link rel="stylesheet" href="assets/css/style.min.css">
   <link rel="stylesheet" href="assets/css/certifications.min.css">
+  <style>
+    @media (hover: hover) and (pointer: fine) {
+      body {
+        cursor: auto;
+      }
+
+      a,
+      button,
+      input,
+      textarea,
+      select {
+        cursor: auto;
+      }
+
+      .cursor-dot,
+      .cursor-trail,
+      .cursor-glow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .cursor-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid rgba(59, 130, 246, 0.75);
+        box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.12), 0 0 18px rgba(96, 165, 250, 0.45);
+        transform: translate(-50%, -50%);
+        z-index: 10000;
+      }
+
+      .cursor-trail {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 1px solid rgba(96, 165, 250, 0.8);
+        background: rgba(59, 130, 246, 0.12);
+        box-shadow: 0 0 24px rgba(59, 130, 246, 0.24);
+        transform: translate(-50%, -50%);
+      }
+
+      .cursor-glow {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(147, 197, 253, 0.52) 0%, rgba(59, 130, 246, 0.2) 30%, transparent 72%);
+        filter: blur(2px);
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    @media (max-width: 920px), (pointer: coarse) {
+      body,
+      a,
+      button,
+      input,
+      textarea,
+      select {
+        cursor: auto;
+      }
+
+      .cursor-dot,
+      .cursor-trail,
+      .cursor-glow {
+        display: none;
+      }
+    }
+
+    .btn,
+    .cert-provider-cta,
+    .skill-filter-btn {
+      --mx: 0px;
+      --my: 0px;
+      position: relative;
+      overflow: hidden;
+      transform: translate(var(--mx), var(--my));
+      transition: transform 0.24s var(--ease), box-shadow 0.24s var(--ease), background 0.24s var(--ease), border-color 0.24s var(--ease);
+    }
+
+    .btn:hover,
+    .cert-provider-cta:hover,
+    .skill-filter-btn:hover {
+      transform: translate(var(--mx), calc(var(--my) - 3px));
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(96, 165, 250, 0.92), rgba(59, 130, 246, 0.15));
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .timeline.ready::before {
+      transform: scaleY(1);
+    }
+
+    .job-card {
+      position: relative;
+      opacity: 0;
+      transform: translateX(var(--shift, 0px)) scale(0.98);
+      transition: transform 0.7s var(--ease), opacity 0.7s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+
+    .job-card:nth-child(odd) {
+      --shift: -42px;
+    }
+
+    .job-card:nth-child(even) {
+      --shift: 42px;
+    }
+
+    .job-card::before {
+      content: "";
+      position: absolute;
+      left: -23px;
+      top: 30px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #60a5fa, #2563eb);
+      box-shadow: 0 0 18px rgba(59, 130, 246, 0.55);
+      opacity: 0;
+      transform: scale(0.5);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .job-card.reveal.show {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+
+    .job-card.reveal.show::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    @media (max-width: 760px) {
+      .timeline {
+        padding-left: 18px;
+      }
+
+      .timeline::before {
+        left: 8px;
+      }
+
+      .job-card {
+        transform: translateY(18px) scale(0.98);
+      }
+
+      .job-card:nth-child(odd),
+      .job-card:nth-child(even) {
+        --shift: 0px;
+      }
+
+      .job-card::before {
+        left: -17px;
+        top: 24px;
+      }
+    }
+  </style>
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -72,6 +250,7 @@
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#education">Education</a></li>
+        <li><a href="#terminal">Terminal</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
 
@@ -103,8 +282,8 @@
           and on-site or remote user support.
         </p>
         <div class="btn-row hero-animate hero-actions">
-          <a class="btn btn-primary" href="#contact">Contact Me</a>
-          <a class="btn btn-outline" href="assets/documents/resume-agan-sulisfiana.pdf" target="_blank" rel="noopener noreferrer">Download Resume</a>
+          <a class="btn btn-primary magnetic-item" href="#contact">Contact Me</a>
+          <a class="btn btn-outline magnetic-item" href="assets/documents/resume-agan-sulisfiana.pdf" target="_blank" rel="noopener noreferrer">Download Resume</a>
         </div>
       </div>
 
@@ -176,8 +355,15 @@
         <h2>Technical Skills</h2>
       </div>
 
+      <div class="skills-filter reveal" role="tablist" aria-label="Skills Filter">
+        <button type="button" class="skill-filter-btn active" data-filter="all">All Skills</button>
+        <button type="button" class="skill-filter-btn" data-filter="hardware">Hardware & Devices</button>
+        <button type="button" class="skill-filter-btn" data-filter="systems">Network & Systems</button>
+        <button type="button" class="skill-filter-btn" data-filter="software">Web & Operations</button>
+      </div>
+
       <div class="skills-grid">
-        <div class="skill-card reveal">
+        <div class="skill-card reveal" data-category="hardware helpdesk">
           <div class="skill-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M3 11a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3"/><path d="M3 11v3a3 3 0 0 0 3 3h3v2H7"/><path d="M14 17h2v2h-2z"/><path d="M14 17h-4"/><path d="M18 11v6"/></svg>
           </div>
@@ -185,7 +371,7 @@
           <p>End-user support, ticket handling, and structured problem solving.</p>
         </div>
 
-        <div class="skill-card reveal">
+        <div class="skill-card reveal" data-category="hardware">
           <div class="skill-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-3-3 2.8-2.8Z"/></svg>
           </div>
@@ -193,7 +379,7 @@
           <p>PC, laptop, peripheral support, and preventive maintenance.</p>
         </div>
 
-        <div class="skill-card reveal">
+        <div class="skill-card reveal" data-category="systems">
           <div class="skill-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
           </div>
@@ -201,7 +387,7 @@
           <p>Windows installation, configuration, application setup, and system maintenance.</p>
         </div>
 
-        <div class="skill-card reveal">
+        <div class="skill-card reveal" data-category="systems">
           <div class="skill-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg>
           </div>
@@ -209,7 +395,7 @@
           <p>LAN, Wi-Fi, IP address configuration, and connectivity troubleshooting.</p>
         </div>
 
-        <div class="skill-card reveal">
+        <div class="skill-card reveal" data-category="hardware">
           <div class="skill-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 22v-4"/><path d="M18 22v-4"/><rect x="4" y="9" width="16" height="9" rx="2"/><path d="M8 13h.01"/><path d="M12 13h4"/></svg>
           </div>
@@ -217,7 +403,7 @@
           <p>Printer, peripheral, driver, and operational device support.</p>
         </div>
 
-        <div class="skill-card reveal">
+        <div class="skill-card reveal" data-category="systems">
           <div class="skill-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
           </div>
@@ -225,7 +411,15 @@
           <p>Remote technical assistance for users and project requirements.</p>
         </div>
 
-        <div class="skill-card reveal">
+        <div class="skill-card reveal" data-category="software">
+          <div class="skill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3>Web & Scripting</h3>
+          <p>HTML, CSS, JavaScript basics, and database query workflows.</p>
+        </div>
+
+        <div class="skill-card reveal" data-category="software">
           <div class="skill-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6"/><path d="M9 16h4"/></svg>
           </div>
@@ -233,7 +427,7 @@
           <p>Technical reports, checklists, and operational documentation.</p>
         </div>
 
-        <div class="skill-card reveal">
+        <div class="skill-card reveal" data-category="software">
           <div class="skill-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
           </div>
@@ -555,6 +749,58 @@
     </div>
   </section>
 
+  <section id="terminal" class="terminal-section">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span>Live Interactive Demo</span>
+        <h2>IT Support Command Center</h2>
+        <p class="section-subtitle">
+          Run simulated network diagnostics, hardware tests, and candidate availability checks live in the browser.
+        </p>
+      </div>
+
+      <div class="terminal-window reveal">
+        <div class="terminal-header">
+          <div class="terminal-dots" aria-hidden="true">
+            <span class="terminal-dot terminal-dot--red"></span>
+            <span class="terminal-dot terminal-dot--yellow"></span>
+            <span class="terminal-dot terminal-dot--green"></span>
+          </div>
+          <div class="terminal-title">agan@it-support: ~/diagnostics</div>
+          <div class="terminal-actions">
+            <button type="button" class="terminal-btn-clear" id="terminalClearBtn" title="Clear Terminal Output">Clear</button>
+          </div>
+        </div>
+
+        <div class="terminal-chips" aria-label="Quick Commands">
+          <span class="terminal-chips-label">Quick Commands:</span>
+          <button type="button" class="terminal-chip" data-cmd="help">help</button>
+          <button type="button" class="terminal-chip" data-cmd="ping 192.168.1.1">ping 192.168.1.1</button>
+          <button type="button" class="terminal-chip" data-cmd="diagnose fargo">diagnose fargo</button>
+          <button type="button" class="terminal-chip" data-cmd="diagnose adm">diagnose adm</button>
+          <button type="button" class="terminal-chip" data-cmd="diagnose bca">diagnose bca</button>
+          <button type="button" class="terminal-chip" data-cmd="sysinfo">sysinfo</button>
+          <button type="button" class="terminal-chip" data-cmd="status">status</button>
+        </div>
+
+        <div class="terminal-body" id="terminalBody" role="region" aria-live="polite" aria-label="Terminal output">
+          <div class="terminal-line terminal-line--intro">
+            <span class="term-dim">============================================================</span><br>
+            <span class="term-bold term-accent">AganOS Terminal v5.2 (x86_64-pc-it-ops)</span><br>
+            <span class="term-dim">Session: Active &bull; Host: AGAN-IT-NODE &bull; Latency: 1ms</span><br>
+            <span class="term-dim">Type </span><span class="term-highlight">'help'</span><span class="term-dim"> or click any quick command chip above.</span><br>
+            <span class="term-dim">============================================================</span>
+          </div>
+          <div id="terminalOutput"></div>
+          <form class="terminal-input-row" id="terminalForm" autocomplete="off">
+            <label for="terminalInput" class="terminal-prompt">agan@itsupport:~$</label>
+            <input type="text" id="terminalInput" class="terminal-input" spellcheck="false" autocomplete="off" autocapitalize="off" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="contact" class="contact-section">
     <div class="container">
       <div class="section-heading reveal">
@@ -649,6 +895,89 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
   <script src="assets/js/script.min.js"></script>
+  <script>
+    (function () {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const desktopCursor = window.matchMedia('(hover: hover) and (pointer: fine)').matches && !prefersReducedMotion;
+
+      if (desktopCursor) {
+        const dot = document.createElement('div');
+        dot.className = 'cursor-dot';
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        const glow = document.createElement('div');
+        glow.className = 'cursor-glow';
+        document.body.appendChild(dot);
+        document.body.appendChild(trail);
+        document.body.appendChild(glow);
+
+        let pointerX = window.innerWidth / 2;
+        let pointerY = window.innerHeight / 2;
+        let trailX = pointerX;
+        let trailY = pointerY;
+
+        const onPointerMove = (event) => {
+          pointerX = event.clientX;
+          pointerY = event.clientY;
+          dot.style.opacity = '1';
+          glow.style.opacity = '1';
+          trail.style.opacity = '1';
+        };
+
+        document.addEventListener('pointermove', onPointerMove, { passive: true });
+        document.addEventListener('pointerleave', () => {
+          dot.style.opacity = '0';
+          glow.style.opacity = '0';
+          trail.style.opacity = '0';
+        }, { passive: true });
+
+        function animateCursor() {
+          trailX += (pointerX - trailX) * 0.18;
+          trailY += (pointerY - trailY) * 0.18;
+
+          dot.style.transform = `translate(${pointerX}px, ${pointerY}px) translate(-50%, -50%)`;
+          trail.style.transform = `translate(${trailX}px, ${trailY}px) translate(-50%, -50%)`;
+          glow.style.transform = `translate(${pointerX}px, ${pointerY}px) translate(-50%, -50%)`;
+          requestAnimationFrame(animateCursor);
+        }
+
+        requestAnimationFrame(animateCursor);
+      }
+
+      const magneticItems = document.querySelectorAll('.magnetic-item');
+      magneticItems.forEach((item) => {
+        item.addEventListener('pointermove', (event) => {
+          const rect = item.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          const offsetX = (x / rect.width - 0.5) * 18;
+          const offsetY = (y / rect.height - 0.5) * 18;
+
+          item.style.setProperty('--mx', `${offsetX}px`);
+          item.style.setProperty('--my', `${offsetY}px`);
+        });
+
+        item.addEventListener('pointerleave', () => {
+          item.style.setProperty('--mx', '0px');
+          item.style.setProperty('--my', '0px');
+        });
+      });
+
+      const timeline = document.querySelector('.timeline');
+      if (timeline) {
+        const timelineObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              timeline.classList.add('ready');
+              timelineObserver.disconnect();
+            }
+          });
+        }, { threshold: 0.2 });
+
+        timelineObserver.observe(timeline);
+      }
+    })();
+  </script>
   <script src="assets/js/certifications.js"></script>
 </body>
 </html>
