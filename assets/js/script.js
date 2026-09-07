@@ -145,13 +145,13 @@ backToTop.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-/* ---------- 3D tilt cards (desktop only) ---------- */
+/* ---------- 3D tilt cards & liquid sheen (desktop only) ---------- */
 const canTilt = window.matchMedia('(hover: hover) and (pointer: fine)').matches
   && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if (canTilt) {
-  document.querySelectorAll('.tilt-card').forEach(card => {
-    const maxTilt = 2.5;
+  document.querySelectorAll('.tilt-card, .profile-card').forEach(card => {
+    const maxTilt = 4;
 
     card.addEventListener('pointermove', event => {
       const bounds = card.getBoundingClientRect();
@@ -160,6 +160,8 @@ if (canTilt) {
 
       card.style.setProperty('--tilt-x', `${-y * maxTilt * 2}deg`);
       card.style.setProperty('--tilt-y', `${x * maxTilt * 2}deg`);
+      card.style.setProperty('--sheen-x', `${(x + 0.5) * 100}%`);
+      card.style.setProperty('--sheen-y', `${(y + 0.5) * 100}%`);
     });
 
     card.addEventListener('pointerleave', () => {
@@ -232,12 +234,15 @@ function updateScrollProgress() {
 window.addEventListener('scroll', updateScrollProgress, { passive: true });
 updateScrollProgress();
 
-/* ---------- C. Spotlight hover on cards ---------- */
+/* ---------- C. Liquid Spotlight hover on cards & containers ---------- */
 const canSpotlight = window.matchMedia('(hover: hover) and (pointer: fine)').matches
   && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if (canSpotlight) {
-  document.querySelectorAll('.skill-card, .project-card, .certificate-card, .education-card, .stat').forEach(card => {
+  const spotlightTargets = document.querySelectorAll(
+    '.skill-card, .project-card, .certificate-card, .education-card, .stat, .job-card, .profile-card, .contact-list-item, .contact-form-container, .cert-provider-card, .about-card'
+  );
+  spotlightTargets.forEach(card => {
     card.addEventListener('pointermove', event => {
       const bounds = card.getBoundingClientRect();
       const x = ((event.clientX - bounds.left) / bounds.width) * 100;
@@ -247,3 +252,18 @@ if (canSpotlight) {
     });
   });
 }
+
+/* ---------- D. Liquid ripple click wave ---------- */
+document.querySelectorAll('.btn, .cert-provider-cta, .lang-toggle-btn').forEach(button => {
+  button.addEventListener('click', function(e) {
+    const rect = this.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.classList.add('liquid-ripple');
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
+    ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 700);
+  });
+});

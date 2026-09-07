@@ -29,15 +29,15 @@
 
   /* Effects */
   --radius-sm: 12px;
-  --radius: 18px;
-  --radius-lg: 24px;
-  --shadow-card: 0 18px 40px rgba(0, 0, 0, 0.45);
-  --shadow-hover: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 24px rgba(59, 130, 246, 0.18);
-  --glow: 0 0 12px rgba(59, 130, 246, 0.5);
+  --radius: 20px;
+  --radius-lg: 26px;
+  --shadow-card: 0 18px 40px rgba(0, 0, 0, 0.48), inset 0 1px 1px 0 rgba(255, 255, 255, 0.14);
+  --shadow-hover: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 30px rgba(59, 130, 246, 0.22), inset 0 1px 2px 0 rgba(255, 255, 255, 0.28);
+  --glow: 0 0 16px rgba(59, 130, 246, 0.5);
 
   /* Layout */
   --container: 1180px;
-  --nav-h: 66px;
+  --nav-h: 76px;
 
   /* Motion */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -144,22 +144,44 @@ body > :not(#vanta-bg):not(.aurora):not(.scroll-progress) {
   z-index: 1;
 }
 
-/* ---------- Navbar ---------- */
+/* Ambient top fade for seamless floating navbar transition */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  background: linear-gradient(180deg, rgba(9, 9, 11, 0.75) 0%, rgba(9, 9, 11, 0.2) 65%, transparent 100%);
+  pointer-events: none;
+  z-index: 998;
+}
+
+/* ---------- Floating Liquid Glass Navbar ---------- */
 .navbar {
   position: sticky !important;
-  top: 0;
+  top: 14px;
   z-index: 999 !important;
-  background: rgba(9, 9, 11, 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(20, 20, 26, 0.72) 0%, rgba(13, 13, 17, 0.65) 100%);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  max-width: var(--container);
+  width: 94%;
+  margin: 14px auto 0;
+  box-shadow: 
+    0 16px 36px -8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
+  transition: all var(--dur) var(--ease);
 }
 
 .nav-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 0;
+  padding: 10px 24px;
   color: var(--text-primary);
   gap: 16px;
 }
@@ -283,12 +305,15 @@ body > :not(#vanta-bg):not(.aurora):not(.scroll-progress) {
 
 /* ---------- Hero ---------- */
 .hero {
-  min-height: 88vh;
+  min-height: calc(88vh - var(--nav-h));
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, rgba(9, 9, 11, 0.92), rgba(17, 17, 20, 0.88) 55%, rgba(37, 99, 235, 0.22));
+  background: 
+    radial-gradient(ellipse 70% 55% at 75% 35%, rgba(37, 99, 235, 0.15), transparent 70%),
+    radial-gradient(ellipse 60% 45% at 20% 65%, rgba(59, 130, 246, 0.09), transparent 70%);
   color: var(--text-primary);
-  padding: 80px 0;
+  padding: 60px 0 80px;
+  position: relative;
 }
 
 .hero-grid {
@@ -422,16 +447,19 @@ body > :not(#vanta-bg):not(.aurora):not(.scroll-progress) {
   background: var(--accent-soft);
 }
 
-/* ---------- Profile card ---------- */
+/* ---------- Profile card (Liquid Glass & 3D Depth) ---------- */
 .profile-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: rgba(18, 18, 24, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-lg);
-  padding: 32px;
+  padding: 34px;
   text-align: center;
   box-shadow: var(--shadow-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 
 .profile-photo {
@@ -439,10 +467,18 @@ body > :not(#vanta-bg):not(.aurora):not(.scroll-progress) {
   height: 180px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid var(--accent);
-  box-shadow: 0 20px 45px rgba(37, 99, 235, 0.3);
+  border: 3px solid rgba(59, 130, 246, 0.75);
+  box-shadow: 0 0 35px rgba(37, 99, 235, 0.45), inset 0 0 15px rgba(59, 130, 246, 0.3);
   margin: 0 auto 20px;
   background: var(--surface-hover);
+  position: relative;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  animation: photoFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes photoFloat {
+  0% { transform: translateY(0px) scale(1); }
+  100% { transform: translateY(-6px) scale(1.02); }
 }
 
 .profile-card h3 {
@@ -518,13 +554,15 @@ section {
 
 /* ---------- About / Stats ---------- */
 .about-card {
-  background: var(--surface);
-  padding: 34px;
+  background: rgba(18, 18, 24, 0.68);
+  padding: 36px;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  position: relative;
+  overflow: hidden;
 }
 
 .about-card p {
@@ -540,17 +578,22 @@ section {
 }
 
 .stat {
-  background: var(--surface-solid);
-  border: 1px solid var(--border);
+  background: rgba(22, 22, 28, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius);
   padding: 24px 18px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 
 .stat:hover {
   transform: translateY(-6px);
-  border-color: var(--accent-border);
+  border-color: rgba(59, 130, 246, 0.45);
   box-shadow: var(--shadow-hover);
 }
 
@@ -580,23 +623,23 @@ section {
 .job-card,
 .education-card,
 .project-card {
-  background: var(--surface);
+  background: rgba(18, 18, 24, 0.65);
   border-radius: var(--radius);
-  padding: 24px;
+  padding: 26px;
   box-shadow: var(--shadow-card);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 .skill-card:hover,
 .job-card:hover,
 .education-card:hover {
   transform: translateY(-6px);
-  border-color: var(--accent-border);
+  border-color: rgba(59, 130, 246, 0.45);
   box-shadow: var(--shadow-hover);
 }
 
@@ -957,18 +1000,23 @@ section {
   display: flex;
   align-items: center;
   gap: 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 20px;
+  background: rgba(18, 18, 24, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 22px;
   border-radius: var(--radius);
   color: var(--text-secondary);
   text-decoration: none;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
   transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 
 .contact-list-item:hover {
   transform: translateY(-4px);
-  border-color: var(--accent-border);
+  border-color: rgba(59, 130, 246, 0.45);
   box-shadow: var(--shadow-hover);
   color: var(--text-primary);
 }
@@ -992,15 +1040,20 @@ section {
   place-items: center;
   border-radius: 50%;
   background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
   flex-shrink: 0;
 }
 
 .contact-form-container {
-  background: var(--surface);
-  padding: 32px;
+  background: rgba(18, 18, 24, 0.68);
+  padding: 34px;
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: var(--shadow-card);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  position: relative;
+  overflow: hidden;
 }
 
 .form-group {
@@ -1126,6 +1179,18 @@ section {
     grid-template-columns: 1fr;
   }
 
+  /* Floating Navbar on Mobile */
+  .navbar {
+    top: 10px;
+    width: 95%;
+    border-radius: 24px;
+    margin: 8px auto 0;
+  }
+
+  .nav-content {
+    padding: 10px 16px;
+  }
+
   /* Mobile menu */
   .nav-toggle {
     display: flex;
@@ -1133,16 +1198,18 @@ section {
 
   .nav-menu {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 10px);
     left: 0;
     right: 0;
     flex-direction: column;
     gap: 0;
-    background: rgba(9, 9, 11, 0.98);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border);
-    padding: 8px 0 18px;
+    background: rgba(14, 14, 18, 0.94);
+    backdrop-filter: blur(24px) saturate(190%);
+    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 1px 0 rgba(255, 255, 255, 0.16);
+    padding: 10px 0 18px;
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -1150,7 +1217,7 @@ section {
   }
 
   .nav-menu.open {
-    max-height: 420px;
+    max-height: 440px;
     opacity: 1;
   }
 
@@ -1160,8 +1227,8 @@ section {
 
   .nav-menu a {
     display: block;
-    padding: 14px 6%;
-    border-bottom: 1px solid var(--border);
+    padding: 14px 8%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .nav-menu a::after {
@@ -1199,6 +1266,10 @@ section {
     transform: none;
   }
 
+  .profile-photo {
+    animation: none !important;
+  }
+
   .hero-text > .badge,
   .hero-animate {
     animation: none;
@@ -1224,13 +1295,13 @@ section {
 }
 
 /* ============================================================
-   ENHANCEMENTS
-   A. Aurora ambient blobs · B. Staggered reveal ·
-   C. Spotlight hover · E. Scroll progress bar ·
-   F. Animated gradient text
+   LIQUID GLASS ENHANCEMENTS
+   A. Organic Liquid Aurora Blobs · B. Staggered Reveal ·
+   C. Liquid Spotlight & Specular Rim · D. 3D Tilt Sheen ·
+   E. Liquid Ripple Effect · F. Animated Gradient Text
    ============================================================ */
 
-/* ---------- A. Aurora ambient blobs ---------- */
+/* ---------- A. Organic Liquid Aurora Blobs ---------- */
 .aurora {
   position: fixed;
   inset: 0;
@@ -1241,52 +1312,82 @@ section {
 
 .aurora-blob {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.5;
-  will-change: transform;
+  filter: blur(80px);
+  opacity: 0.52;
+  will-change: transform, border-radius;
+  border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
 }
 
 .aurora-blob-1 {
-  width: 480px;
-  height: 480px;
-  top: -120px;
+  width: 520px;
+  height: 520px;
+  top: -100px;
   left: -80px;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.55), transparent 65%);
-  animation: auroraFloat1 18s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.65), rgba(59, 130, 246, 0.25) 50%, transparent 70%);
+  animation: auroraMorph1 18s ease-in-out infinite alternate;
 }
 
 .aurora-blob-2 {
-  width: 420px;
-  height: 420px;
-  top: 30%;
+  width: 480px;
+  height: 480px;
+  top: 35%;
   right: -100px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.4), transparent 65%);
-  animation: auroraFloat2 22s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.5), rgba(59, 130, 246, 0.2) 50%, transparent 70%);
+  animation: auroraMorph2 22s ease-in-out infinite alternate;
 }
 
 .aurora-blob-3 {
-  width: 380px;
-  height: 380px;
-  bottom: -120px;
-  left: 35%;
-  background: radial-gradient(circle, rgba(96, 165, 250, 0.32), transparent 65%);
-  animation: auroraFloat3 26s ease-in-out infinite;
+  width: 440px;
+  height: 440px;
+  bottom: -100px;
+  left: 30%;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.45), rgba(37, 99, 235, 0.2) 50%, transparent 70%);
+  animation: auroraMorph3 26s ease-in-out infinite alternate;
 }
 
-@keyframes auroraFloat1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(60px, 80px) scale(1.12); }
+@keyframes auroraMorph1 {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  }
+  50% {
+    transform: translate(70px, 90px) rotate(180deg) scale(1.14);
+    border-radius: 58% 42% 38% 62% / 55% 65% 35% 45%;
+  }
+  100% {
+    transform: translate(-30px, 40px) rotate(360deg) scale(1.05);
+    border-radius: 35% 65% 60% 40% / 40% 50% 50% 60%;
+  }
 }
 
-@keyframes auroraFloat2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-80px, 50px) scale(1.08); }
+@keyframes auroraMorph2 {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    border-radius: 50% 50% 35% 65% / 60% 40% 60% 40%;
+  }
+  50% {
+    transform: translate(-90px, 60px) rotate(-160deg) scale(1.12);
+    border-radius: 35% 65% 55% 45% / 45% 55% 45% 55%;
+  }
+  100% {
+    transform: translate(40px, -50px) rotate(-360deg) scale(0.95);
+    border-radius: 60% 40% 45% 55% / 50% 60% 40% 50%;
+  }
 }
 
-@keyframes auroraFloat3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(40px, -70px) scale(1.15); }
+@keyframes auroraMorph3 {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    border-radius: 40% 60% 55% 45% / 55% 45% 55% 45%;
+  }
+  50% {
+    transform: translate(50px, -80px) rotate(140deg) scale(1.18);
+    border-radius: 65% 35% 45% 55% / 40% 60% 40% 60%;
+  }
+  100% {
+    transform: translate(-60px, 30px) rotate(280deg) scale(1.02);
+    border-radius: 45% 55% 65% 35% / 60% 40% 60% 40%;
+  }
 }
 
 /* ---------- B. Staggered reveal ---------- */
@@ -1294,12 +1395,16 @@ section {
   transition-delay: var(--reveal-delay, 0s);
 }
 
-/* ---------- C. Spotlight hover on cards ---------- */
+/* ---------- C. Liquid Spotlight & Specular Rim on Cards ---------- */
 .skill-card,
 .project-card,
 .certificate-card,
 .education-card,
-.stat {
+.stat,
+.job-card,
+.profile-card,
+.contact-list-item,
+.contact-form-container {
   --spot-x: 50%;
   --spot-y: 50%;
 }
@@ -1308,15 +1413,20 @@ section {
 .project-card::before,
 .certificate-card::before,
 .education-card::before,
-.stat::before {
+.stat::before,
+.job-card::before,
+.profile-card::before,
+.contact-list-item::before,
+.contact-form-container::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   background: radial-gradient(
-    340px circle at var(--spot-x) var(--spot-y),
-    rgba(59, 130, 246, 0.14),
-    transparent 60%
+    420px circle at var(--spot-x) var(--spot-y),
+    rgba(59, 130, 246, 0.22),
+    rgba(96, 165, 250, 0.08) 35%,
+    transparent 70%
   );
   opacity: 0;
   transition: opacity var(--dur) var(--ease);
@@ -1328,34 +1438,97 @@ section {
 .project-card:hover::before,
 .certificate-card:hover::before,
 .education-card:hover::before,
-.stat:hover::before {
+.stat:hover::before,
+.job-card:hover::before,
+.profile-card:hover::before,
+.contact-list-item:hover::before,
+.contact-form-container:hover::before {
   opacity: 1;
 }
 
-/* keep card content above the spotlight layer */
+/* Keep card content above the spotlight layer */
 .skill-card > *,
 .project-card > *,
 .certificate-card > *,
 .education-card > *,
-.stat > * {
+.stat > *,
+.job-card > *,
+.profile-card > *,
+.contact-list-item > *,
+.contact-form-container > * {
   position: relative;
   z-index: 1;
 }
 
-/* ---------- E. Scroll progress bar ---------- */
+/* ---------- D. 3D Tilt & Specular Sheen ---------- */
+.tilt-card {
+  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(0);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(147, 197, 253, 0.16) 50%,
+    rgba(255, 255, 255, 0.06) 55%,
+    transparent 80%
+  );
+  background-position: var(--sheen-x, 50%) var(--sheen-y, 50%);
+  background-size: 250% 250%;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: overlay;
+}
+
+.tilt-card:hover::after {
+  opacity: 1;
+}
+
+/* ---------- E. Liquid Ripple Effect on Interactive Elements ---------- */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.45) 0%, rgba(96, 165, 250, 0.25) 50%, transparent 80%);
+  transform: scale(0);
+  animation: rippleWave 0.65s linear;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes rippleWave {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ---------- F. Scroll Progress & Animated Gradient Text ---------- */
 .scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
   height: 3px;
   width: 0%;
-  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright), #93c5fd);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.7);
   z-index: 1000;
   transition: width 0.1s linear;
 }
 
-/* ---------- F. Animated gradient text ---------- */
 .gradient-text {
   background: linear-gradient(
     100deg,
