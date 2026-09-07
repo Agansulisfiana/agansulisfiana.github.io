@@ -139,9 +139,55 @@ img::after {
     var(--bg-base);
 }
 
-body > :not(#vanta-bg):not(.aurora):not(.scroll-progress) {
-  position: relative;
+/* Shooting Stars & Cosmic Ambient Canvas Layer */
+#shooting-stars-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
   z-index: 1;
+  mix-blend-mode: screen;
+  overflow: hidden;
+}
+
+/* Neon Cursor WebGL Canvas Layer - Subtle & Atmospheric */
+#neon-cursor-bg,
+#app {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.65;
+  mix-blend-mode: screen;
+  overflow: hidden;
+  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.35));
+}
+
+#neon-cursor-bg canvas,
+#app canvas {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+body.has-neon-cursor .cursor-trail,
+body.has-neon-cursor .cursor-glow {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+body > :not(#vanta-bg):not(#shooting-stars-bg):not(#neon-cursor-bg):not(#app):not(.aurora):not(.scroll-progress) {
+  position: relative;
+  z-index: 2;
 }
 
 /* Ambient top fade for seamless floating navbar transition */

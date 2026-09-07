@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "node server.js",
+    "lint": "node -c server.js",
     "minify": "cleancss -o assets/css/style.min.css assets/css/style.css && cleancss -o assets/css/certifications.min.css assets/css/certifications.css && terser assets/js/script.js -o assets/js/script.min.js -c -m && terser assets/js/certifications.js -o assets/js/certifications.min.js -c -m",
     "build": "npm run minify",
     "start": "node server.js"
