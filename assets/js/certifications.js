@@ -58,6 +58,16 @@
       ]
     }
     ,
+    'soti': {
+      name: 'SOTI',
+      monogram: 'SOTI',
+      svg: '<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M15 22c0-5 4-9 9-9h8" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><path d="M49 42c0 5-4 9-9 9h-8" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><path d="M21 38l22-12" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><circle cx="19" cy="40" r="6" fill="currentColor" opacity="0.8"/></svg>',
+      certificates: [
+        { title: 'SOTI Connect Technician (SCT 2026.0) — Certified October 16, 2026',
+          file: 'assets/images/certificates/SOTI/SOTI Connect Technician - SOTI Certified SCT 2026.0.jpg' }
+      ]
+    }
+    ,
     'sentuh': {
       name: 'Sentuh',
       monogram: 'SN',

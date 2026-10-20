@@ -120,6 +120,12 @@
   color: #bfdbfe;
 }
 
+.cert-provider-logo--soti {
+  background: radial-gradient(circle at 28% 25%, rgba(132, 204, 22, 0.2), transparent 38%),
+    linear-gradient(180deg, #10231b 0%, #111827 100%);
+  color: #a3e635;
+}
+
 .cert-provider-logo--sololearn {
   background: radial-gradient(circle at 32% 26%, rgba(34, 197, 94, 0.16), transparent 38%),
     linear-gradient(180deg, #071419 0%, #111827 100%);
@@ -131,7 +137,8 @@
 }
 
 .cert-provider-logo--hid svg,
-.cert-provider-logo--cisco svg {
+.cert-provider-logo--cisco svg,
+.cert-provider-logo--soti svg {
   filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.18));
 }
 
